@@ -8,15 +8,8 @@ Sean Maden (github: metamaden) is a Ph.D student in Computational Biology at Ore
 
 ### About Sean
 
-I am a bioinformatician specializing in compute systems for the study of epigenetics, oncolongy, and integration of different molecular data types.
+I am a bioinformatician specializing in compute systems for the study of epigenetics, oncolongy, and integration of different molecular data types. My work is highly collaborative, and I am interested in opportunities to expand digital workflows and systems to tackle reproducibility and cutting edge biomedical science. 
 
 ### View my CV
 ![SeanMaden_CurriculumVitae](https://github.com/metamaden/CV_repo/blob/master/CV_SeanMaden_2018_revised.pdf)
 
-### Contact me
-
-[maden@ohsu.edu](mailto:maden@ohsu.edu)
-
-[maden.sean@gmail.com](mailto:maden.sean@gmail.com)
-
-[GitHub: metamaden](https://github.com/metamaden)
