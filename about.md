@@ -4,12 +4,17 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Metamaden is Sean Maden, a Ph.D student in Computational Biology at Oregion Health & Sciences University, Department of Biomedical Engineering, with Dr. Nellore's Lab.
 
-### More Information
+### About Sean
 
-A place to include any other types of information that you'd like to include about yourself.
+I am a bioinformatician specializing in compute systems for the study of epigenetics, oncolongy, and integration of different molecular data types.
+
+### View my CV
+![SeanMaden_CurriculumVitae](https://github.com/metamaden/CV_repo/blob/master/CV_SeanMaden_2018_revised.pdf)
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[maden@ohsu.edu](mailto:maden@ohsu.edu)
+[maden.sean@gmail.com](mailto:maden.sean@gmail.com)
+[GitHub: metamaden](https://github.com/metamaden)
