@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Metamaden is Sean Maden, a Ph.D student in Computational Biology at Oregion Health & Sciences University, Department of Biomedical Engineering, with Dr. Nellore's Lab.
+Sean Maden (github: metamaden) is a Ph.D student in Computational Biology at Oregion Health & Sciences University, Department of Biomedical Engineering, with Dr. Nellore's Lab.
 
 ### About Sean
 
