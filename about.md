@@ -16,5 +16,7 @@ I am a bioinformatician specializing in compute systems for the study of epigene
 ### Contact me
 
 [maden@ohsu.edu](mailto:maden@ohsu.edu)
+
 [maden.sean@gmail.com](mailto:maden.sean@gmail.com)
+
 [GitHub: metamaden](https://github.com/metamaden)
