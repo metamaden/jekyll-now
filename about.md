@@ -1,11 +1,8 @@
 ---
 layout: page
-title: 
+title: About Sean
 permalink: /about/
 ---
-###
-
-### About Sean
 
 Sean Maden (GitHub username: metamaden) is a Ph.D student in Computational Biology at Oregion Health & Sciences University, Department of Biomedical Engineering, with Dr. Nellore's Lab. He is a researcher and scholar of eigenetics and integrative computational oncology.
 
