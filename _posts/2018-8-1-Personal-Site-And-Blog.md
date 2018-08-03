@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How I Made My First Personal Site and Blog: GitHub Pages + Jekyll == <3
+title: How I Made My First Personal Site and Blog, GitHub Pages + Jekyll
 ---
 
 GitHub provides a service for hosting project- or personal-level websites, with Jekyll integration. Jekyll enables quick and easy generation of static websites using publicly available, shared, or bought themes for your webpage. This GitHub Pages+Jekyll integration means a lot of the work of webpage design behind-the-scenes development is removed, so you can focus on populating your new site with interesting content. If you are a web developer, this is maybe limiting and not all that great. But if, like me, you merely dabble in web development but wouldn't include it in your CV, this convenience factor is a major plus.
