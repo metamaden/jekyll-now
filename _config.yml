@@ -50,6 +50,21 @@ url: metamaden.github.io
 # then add in the baseurl here, like this: "/repository-name"
 baseurl: ""
 
+# Collections
+collections:
+  teaching:
+    output: true
+    permalink: /:collection/:path/
+  publications:
+    output: true
+    permalink: /:collection/:path/
+  portfolio:
+    output: true
+    permalink: /:collection/:path/
+  talks:
+    output: true
+    permalink: /:collection/:path/
+
 #
 # !! You don't need to change any of the configuration flags below !!
 #
