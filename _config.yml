@@ -70,7 +70,7 @@ kramdown:
     css_class: 'highlight'
     
 # Jekyl theme
-theme: hacker
+theme: jekyll-theme-modernist
 
 # Set the Sass partials directory, as we're using @imports
 sass:
