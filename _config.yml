@@ -11,9 +11,6 @@ description: Ph.D Student, Bioinformatician, useR.
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://scontent-sea1-1.xx.fbcdn.net/v/t1.0-9/37582420_2129409430604048_3447063635631800320_n.jpg?_nc_cat=0&oh=8707b8cb66d2510104da6ea9e847f681&oe=5BD59EC4
 
-# Jekyl theme
-theme: Solar
-
 #
 # Flags below are optional
 #
@@ -71,6 +68,9 @@ kramdown:
   syntax_highlighter_opts:
     # Use existing pygments syntax highlighting css
     css_class: 'highlight'
+    
+# Jekyl theme
+theme: hacker
 
 # Set the Sass partials directory, as we're using @imports
 sass:
