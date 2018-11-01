@@ -8,11 +8,7 @@ I wanted to share my proposal for the [2018 Better Scientific Software (BSSw) Fe
 
 ***
 
-Prompt: How did you hear about the BSSw Fellowship?
-
-My Response: Fred Hutch Bioinformatics Interest Group (coordinated through Slack channel)
-
-Experience
+Section: Experience
 
 Prompt: Describe your work relevant to scientific software.
 
@@ -22,7 +18,7 @@ Prompt: Describe your background and experience relevant to being a BSSw Fellow.
 
 My Response: The BSSw Fellowship supports preserving code functionality with proper versioning and documentation, and creating resources that aid researchers in doing code-based science effectively. I have extensive professional experience as a bioinformatician working with public data repositories and scientific code. This has enabled me to tackle systemic problems around code access, publication, and reuse for reproducing findings in computational science. At an NIH hackathon event, I contributed to PubCode, which aimed to index scientific software similar to how PubMed indexes journal articles in biomedical science. PubCode would have archived and made citable scientific code used in research papers. This is important: if a developer took down their code or its associated executables, portions of papers using them could become irreproducible. Moreover, when no publication is associated with software, authors may cite a GitHub or Bitbucket repository, or some other website lacking a persistent digital object identifier (DOI). This distributes citations across multiple resources, making it challenging to find all usages of a software package in the literature. Finally, when a publication uses new code, that code is often not released as standalone software. This means the code is not widely identified as an independently citable object. Bureaucratic issues at the NIH unfortunately prevented PubCode from realizing its full potential, and the project I propose here will subsume its ideas.
 
-Proposed work and potential impact
+Section: Proposed work and potential impact
 
 Prompt: What would you do as a BSSw Fellow?
 
