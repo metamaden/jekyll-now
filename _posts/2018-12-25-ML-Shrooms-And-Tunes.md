@@ -17,8 +17,7 @@ Before analysis, I needed to preprocess the mushrooms data, which takes the form
 
 {% include image.html url="https://raw.githubusercontent.com/metamaden/metamaden.github.io/master/_posts/media/varimp_rforest.jpg" description="Relative variable importance in random forests model test (N = 5,000 trees)." %}
 
-![Relative variable importance in random forests model test (N = 5,000 trees).](https://raw.githubusercontent.com/metamaden/metamaden.github.io/master/_posts/media/varimp_rforest.jpg)
-*Relative variable importance in random forests model test (N = 5,000 trees).*
+![Relative variable importance in random forests model test (N = 5,000 trees).](https://raw.githubusercontent.com/metamaden/metamaden.github.io/master/_posts/media/varimp_rforest.jpg)*Relative variable importance in random forests model test (N = 5,000 trees).*
 
 I then fitted and tested each model on the preprocessed data. It was surprising to observe substantial discrepancy in model predictive performance across the different algorithms. Testing various hyperparameter sets with random forest or SVM, I observed uniformly high performance, especially when compared to virtually every neural network model I tested. There were slight performance differences suggesting increased performance with either increased tree count (random forest, with ntrees from 100 to 5,000) or a variable weight filter (SVM, retaining the top 50% highest-weighted variables and using a linear kernel). But with neural networks, overall performance was generally erratic across 50 epochs of training, and I had to consider evidence of overfitting (e.g. decline in performance on validation data over training epochs), to determine which network hyperparameter set was most promising. 
 
