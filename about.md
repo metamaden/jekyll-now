@@ -4,7 +4,7 @@ title: About Sean
 permalink: /about/
 ---
 
-Greetings! My name is Sean Maden, I am a Computational Biology Ph.D student at Oregion Health & Science University, in the Department of Biomedical Engineering with Dr. Abhinav Nellore's Lab and PDXGx. I am a researcher and scholar of bioinformatics, eigenetics, and integrative computational oncology.
+Greetings! My name is Sean Maden, I am a Computational Biology Ph.D student at Oregion Health & Science University, in the Department of Biomedical Engineering with Dr. Abhinav Nellore's Lab and PDXGx. I am a researcher and scholar of bioinformatics, epigenetics, and integrative computational oncology.
 
 ### Research Background/Interests
 
