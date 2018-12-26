@@ -4,7 +4,7 @@ title: About Sean
 permalink: /about/
 ---
 
-Greetings! My name is Sean Maden, I am a Computational Biology Ph.D student at Oregion Health & Science University in Portland, OR. I work in Dr. Abhinav Nellore's Lab, in affiliate with PDXGx and Dr. Reid Thompson's Lab. I am a researcher and scholar of bioinformatics, epigenetics, and integrative computational oncology.
+Greetings! My name is Sean Maden, I am a Computational Biology Ph.D student at Oregion Health & Science University in Portland, OR. I work in Dr. Abhinav Nellore's Lab, in affiliation with PDXGx and Dr. Reid Thompson's Lab. I am a researcher and scholar of bioinformatics, epigenetics, and integrative computational oncology.
 
 ### Programming and Research Background
 
