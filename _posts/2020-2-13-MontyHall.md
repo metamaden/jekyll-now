@@ -136,7 +136,7 @@ mtext("Number of Simulations", side = 2, outer = T)
 dev.off()
 ```
 
-![<img style="float: left;" src = "https://github.com/metamaden/montyhall/blob/master/plots/mh_3runs.pdf" height="180"/>](https://github.com/metamaden/montyhall)
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf)
 
 If you prefer to be more precise about the increase in normalcy, we can show greater distribution normalcy by high confidence from the 
 [Shapiro-Wilk Normality test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)
@@ -191,7 +191,7 @@ pdf("mh_ndoors_3plots.pdf", 10, 4)
 getprettyplots(lnd, "Varying door count")
 dev.off()
 ```
-![<img style="float: left;" src = "https://github.com/metamaden/montyhall/blob/master/plots/mh_ndoors_3plots.pdf" height="180"/>](https://github.com/metamaden/montyhall)
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.pdf)
 
 This quantitatively shows the magnitude of win likelihood increase with `ndoors` increase, reinforcing our intuition about the mnemonic device. It's also interesting to note how the standard deviation converges after the means in runs with higher door counts as the win frequency increase becomes both higher and more certain.
 
@@ -206,7 +206,7 @@ grid.arrange(pclassic1, pclassic2, top = "Ribbon overlay comparison", ncol = 2)
 dev.off()
 ```
 
-![<img style="float: left;" src = "https://github.com/metamaden/montyhall/blob/master/plots/mh_2lineplots.pdf" height="180"/>](https://github.com/metamaden/montyhall)
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.pdf)
 
 We'll lean on these line plot representations using distribution standard deviations to calculate the overlaid ribbons.
 
@@ -252,7 +252,7 @@ grid.arrange(plist[[1]], plist[[2]], plist[[3]],
              bottom = "Number of Doors", left = "Win Fraction")
 dev.off()
 ```
-![<img style="float: left;" src = "https://github.com/metamaden/montyhall/blob/master/plots/mh_switchfreq.pdf" height="180"/>](https://github.com/metamaden/montyhall)
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.pdf)
 
 Across run sets of each door switch frequency, there's a clear transition from an approximate negative power function (e.g. x ^ -1, top leftmost plot), to something approaching a fractional power function (e.g. x ^ 1/2, bottom rightmost plot). 
 
@@ -273,7 +273,7 @@ getlineplot(lnd, ptitle = "Win Freq. by Switch Freq.",
             xlab = "Switch frequency")
 dev.off()
 ```
-![<img style="float: left;" src = "https://github.com/metamaden/montyhall/blob/master/plots/mh_switchfreq_classicrules.pdf" height="180"/>](https://github.com/metamaden/montyhall)
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.pdf)
 
 # Conclusions and analysis extensions
 
@@ -294,6 +294,6 @@ Let's use the plot gif function to generate the gif files. Note all the data is 
 getprettygif(ldat[[11]], plottype = "composite_ndoors", gifname = "mh_ndoors.gif")
 getprettygif(ldat, plottype = "lineplots_doorswitch", gifname = "mh_switchfreq.gif")
 ```
-![<img style="float: left;" src = "https://github.com/metamaden/montyhall/blob/master/plots/mh_ndoors.gif" height="180"/>](https://github.com/metamaden/montyhall)
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors.gif](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors.gif)
 
-![<img style="float: left;" src = "https://github.com/metamaden/montyhall/blob/master/plots/mh_switchfreq.gif" height="180"/>](https://github.com/metamaden/montyhall)
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.gif](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.gif)
