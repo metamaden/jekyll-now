@@ -156,7 +156,7 @@ If you prefer to be more precise about the increase in distribution normality, w
 with `shapiro.test()` to test the null hypothesis that data were drawn from a normal distribution.
 
 ```
-# run normalcy tests
+# run normality tests
 st1 <- shapiro.test(lr[["5;2"]])$p.value
 st2 <- shapiro.test(lr[["100;100"]])$p.value
 st3 <- shapiro.test(lr[["1000;1000"]])$p.value
@@ -206,6 +206,8 @@ dev.off()
 ```
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.png" align = "center" alt="mh_ndoors_3plots" width="1800"/>
+
+**Figure 3.** Three ways to visualize simulated win fraction distributions across door various quantities. Left, violin plots. Middle, ridge plots. Right, line plot of distribution means (lines) and standard deviation confidences (grey ribbon).
 
 Thus we have 3 ways of visualizing the win frequency distribution increase following increased door quantity. Interestingly, as door quantity increases, the standard deviation seems to contract slightly after the means show an asymptote, which reflects that win frequency increase becomes both higher and more certain at higher door quantities.
 
