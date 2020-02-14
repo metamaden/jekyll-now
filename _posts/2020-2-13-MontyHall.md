@@ -40,7 +40,7 @@ Before we dive into the simulation code, I'll next show a [pseudocode](https://e
 * run Monty_Hall_Simulation:
   + do Monty_Hall_Game up to num_iterations
   
-I've outlined pseudocode for two functions which loosely correspond to the `mhgame()` and `mhsim()` functions in the `montyhall` package. In programming, it's often preferred to break a large problem into discrete smaller sub-problems, wherein each sub-problem solution can be more easily fine-tuned. This reductionist approach can make debugging and [unit testing](https://en.wikipedia.org/wiki/Unit_testing) *a lot* easier, especially for large and multifaceted projects. With these conceptual formulations of the problem and code tasks, let's look how I tackled these in the simnulation code below.
+I've outlined pseudocode for two functions which loosely correspond to the `mhgame()` and `mhsim()` functions in the `montyhall` package. In programming, it's often preferred to break a large problem into discrete smaller sub-problems, wherein each sub-problem solution can be more easily fine-tuned. This reductionist approach can make debugging and [unit testing](https://en.wikipedia.org/wiki/Unit_testing) *a lot* easier, especially as projects increase in complexity. With these conceptual formulations of the classic Monty Hall problem, let's next look at how I wrote the simulation code.
 
 # The simulation code
 
