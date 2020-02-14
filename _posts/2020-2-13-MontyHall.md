@@ -130,7 +130,7 @@ mtext("Number of Simulations", side = 2, outer = T)
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="1500"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="1800"/>
 
 If you prefer to be more precise about the increase in normalcy, we can show greater distribution normalcy by high confidence from the 
 [Shapiro-Wilk Normality test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)
@@ -186,7 +186,7 @@ getprettyplots(lnd, "Varying door count")
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.png" align = "center" alt="mh_ndoors_3plots" width="1500"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.png" align = "center" alt="mh_ndoors_3plots" width="1800"/>
 
 This quantitatively shows the magnitude of win likelihood increase with `ndoors` increase, reinforcing our intuition about the mnemonic device. It's also interesting to note how the standard deviation converges after the means in runs with higher door counts as the win frequency increase becomes both higher and more certain.
 
@@ -201,7 +201,7 @@ grid.arrange(pclassic1, pclassic2, top = "Ribbon overlay comparison", ncol = 2)
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="1500"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="900"/>
 
 We'll lean on these line plot representations using distribution standard deviations to calculate the overlaid ribbons.
 
@@ -270,7 +270,7 @@ getlineplot(lnd, ptitle = "Win Freq. by Switch Freq.",
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="900"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="500"/>
 
 # Conclusions and analysis extensions
 
