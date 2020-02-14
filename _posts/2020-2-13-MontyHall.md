@@ -4,7 +4,7 @@ title: Cracking the Monty Hall Problem with brute force simulation
 tags: monty_hall; simulation; R; Rstats; ggplot2
 ---
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" alt="drawing" width="200" align = "right/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" alt="drawing" width="200" align = "right"/>
 
 On a gameshow stage before you wait 3 closed doors, behind which have been deposited 2 goats and 1 prize, respectively. You are called on to pick a door to be opened to reveal either a goat or a prize. The host, Monty Hall, then reveals a goat behind one of the two remaining unpicked doors. You are then given the option to switch your door selection to the final unpicked door before the big reveal. What should you do?
 
