@@ -12,6 +12,8 @@ It's telling that the Monty Hall problem, featured in an [actual game show](http
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="drawing" width="200" align = "right"/>
 
+**Figure 1.** The hex sticker for `montyhall`, an R package for simulating the Monty Hall problem.
+
 I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. Deploying work as an R package can be extremely worthwhile in production level data science projects. In writing the code for this package, I've knowingly omitting a few best practices for package authorship, in service to expediency and what I consider more clearly written code. Note there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. The 3 key package functions, `mhgame()`, `mhsim()`, and `getfw()`, manage game simulations and return win frequencies across sets of simulated games. These functions only make use of base R without added dependencies. I've also added several visualization utilities that make use of some stellar R packages for visualizations, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) and [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/index.html). Below, I'll walk through the simulation R code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
 
 # Listing game steps and outlining code objectives with pseudocode
@@ -147,6 +149,8 @@ dev.off()
 ```
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="1800"/>
+
+**Figure 2.** Composite histograms of Monty Hall simulation runs using classic parameters. (left) smallest run (5 simulations of 2 games, 10 games total), (middle) intermediate simulation (100 simulations and games, 10,000 total games), (right) large simulation (1,000 simulations and games, 1,000,000 games total).
 
 If you prefer to be more precise about the increase in distribution normality, we can apply the [Shapiro-Wilk Normality test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)
 with `shapiro.test()` to test the null hypothesis that data were drawn from a normal distribution.
