@@ -147,13 +147,13 @@ With increased simulations and iterations, our p-value increase from 0.05 in the
 
 # Bending the rules
 
-I've written `mhsim()` and its `getfw()` wrapper to allow us to modify the game rules in a few ways. Exploring how bending the rules impacts simulated win frequencies can lead us to better understand the roles of key game conditions. Showing quantitatively how win frequencies change in light of different conditions can help us to better characterize the problem and inform the notion that it's *always* better to switch doors under the classical game rules.
+I've written the simulation code to execute the Monty Hall problem with its classic characteristics by default, while allowing for modification of certain game rules and conditions. For our purpose, these classic parameters include randomization of the first 3 steps and that Monty reveals all but 1 door between player decisions. Bending the rules and studying the impact to win frequency distributions can help us better understand how the game ticks. In the process, visualizing our simulation results is a compelling way of reinforcing the notion that switching always increases win chances under the classic game rules.
 
-The first condition we'll explore is the number of doors. I've allowed for the door quantity to be changed with the `ndoors` argument. Practically, this just changes the game setup for an interation by defining a vector of sequential door indices of length `ndoors`. Thus increasing `ndoors` from 3 still preserves other parameters for the classical game be default. 
+The first condition we'll explore is the door quantity. This can be set with the `ndoors` argument to `mhsim()`, which in turn gets passed to iterations of `mhgame()`. Practically, this changes the game setup for an interation by defining a vector of sequential door indices of length `ndoors`. Thus setting `ndoors` to some amount greater than 3 will otherwise preserve other classic problem parameters by default.
 
 I've also allowed for changing the frequency with which the player switches doors with `doorswitch`. The default value of 1 means the player switches 100% of the time, and setting this a lower value between 0 and 1 means decreasing the switch frequency. I did this by implementing `sample()` to randomly select from what's essentiallt a weighted binomial distribution (e.g. possible outcomes are binary but each outcome has a distinct weight). If `doorswitch = 0.2`, we parse player decision by sampling from a distribution where 20% of options are "switch" and (100 - 20 = ) 80% of options are "stay".
 
-# Many doors as an extrapolation mnemonic
+# Visualizing the "many doors" extrapolation mnemonic
 
 One of the more useful [mnemonic devices](https://en.wikipedia.org/wiki/Mnemonic) I've encountered for intuiting the answer to the Monty Hall problem is to increase the number of doors. Maybe we're unsure if switching doors will increase our odds when there are just 3 doors. But if there are 100 doors, and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. We can quantitatively visualize this intuitively useful device with the simulation code. 
 
