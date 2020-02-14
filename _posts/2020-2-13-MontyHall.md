@@ -4,7 +4,7 @@ title: Cracking the Monty Hall Problem with brute force simulation
 tags: monty_hall; simulation; R; Rstats; ggplot2
 ---
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" alt="drawing" width="200" align = "right"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="drawing" width="200" align = "right"/>
 
 On a game show stage before you wait 3 closed doors, behind which have been deposited 2 goats and 1 prize, respectively. You are called on to pick a door to be opened to reveal either a goat or a prize. The host, Monty Hall, then reveals a goat behind one of the two remaining unpicked doors. You are then given the option to switch your door selection to the final unpicked door before the big reveal. What should you do?
 
@@ -12,7 +12,7 @@ This is the [Monty Hall Problem](https://en.wikipedia.org/wiki/Monty_Hall_proble
 
 It's telling that the Monty Hall Problem still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classical") rules of the Monty Hall Problem while allowing for exploration of how modifications to the underlying rules and conditions can chanage game outcomes. Hopefully I can inspire you to think generally about opportunities to conceptualize problems in simulations with useful code.
 
-I've deployed the code with a strictly reproducible vignette in the `montyhall` R package, available on GitHub [here](https://github.com/metamaden/montyhall). Deploying work as an R package can be extremely worthwhile in production level data science projects. Here, I've knowingly omitting a few best practices for package authorship. This was in service to expediency and more clearly written code, but there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. In this package, I've included my simulation function, `mhsim()`, and a wrapper function `getfw()` that returns win frequencies across simulations. While these functions only make use of base R without added dependencies, I've added several visualization utilities that make use of some stellar R packages, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html). I'll walk through the code behind these functions and show how to use them in scripts to explore the Monty Hall Problem.
+I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. It makes use of 3 key functions, `mhgame()` to simulate a single game, `mhsim()` to manage sets of game simulations with a random seed, and `getfw()` which converts game outcomes to win fractions. Deploying work as an R package can be extremely worthwhile in production level data science projects. Here, I've knowingly omitting a few best practices for package authorship. This was in service to expediency and more clearly written code, but there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. While these functions only make use of base R without added dependencies, I've added several visualization utilities that make use of some stellar R packages, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html). Below, I'll walk through the simulation code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
 
 # Formulating the game
 
@@ -133,10 +133,6 @@ mtext("Win Frequency", side = 1, outer = T)
 mtext("Number of Simulations", side = 2, outer = T)
 dev.off()
 ```
-
-![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf){width=70%}
-
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" alt="drawing" width="200" align = "right"/>
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf" alt="drawing" width="200"/>
 
