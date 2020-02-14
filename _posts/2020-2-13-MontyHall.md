@@ -8,11 +8,11 @@ On a game show stage before you wait 3 closed doors, behind which have been depo
 
 This is the [Monty Hall Problem](https://en.wikipedia.org/wiki/Monty_Hall_problem), a kind of logic puzzle involving conditional probability. Assuming you value prizes over goats, and lack prior knowledge about which door has the prize, it can be readily shown that *always* switching doors increases your win probability. If you stick with your first choice, your success probability never exceeds 1 out of 3, while switching increases your probability to 2 out of 3, a pretty substantial improvement!
 
-It's telling that the Monty Hall Problem still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classical") rules of the Monty Hall Problem while allowing for exploration of how modifications to the underlying rules and conditions can chanage game outcomes. Hopefully I can inspire you to think generally about opportunities to conceptualize problems in simulations with useful code.
+It's telling that the Monty Hall Problem, based on an actual game show from the 1960s, still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classical") rules of the Monty Hall Problem while allowing for exploration of how modifications to the underlying rules and conditions can chanage game outcomes. Hopefully I can inspire you to think generally about opportunities to conceptualize problems in simulations with useful code.
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="drawing" width="200" align = "right"/>
 
-I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. It makes use of 3 key functions, `mhgame()` to simulate a single game, `mhsim()` to manage sets of game simulations with a random seed, and `getfw()` which converts game outcomes to win fractions. Deploying work as an R package can be extremely worthwhile in production level data science projects. Here, I've knowingly omitting a few best practices for package authorship. This was in service to expediency and more clearly written code, but there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. While these functions only make use of base R without added dependencies, I've added several visualization utilities that make use of some stellar R packages, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html). Below, I'll walk through the simulation code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
+I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. Three key functions, `mhgame()`, `mhsim()`, and `getfw()`, manage game simulations and return win frequencies across sets of simulated games. Deploying work as an R package can be extremely worthwhile in production level data science projects. Here, I've knowingly omitting a few best practices for package authorship. This was in service to expediency and more clearly written code, but there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. While these functions only make use of base R without added dependencies, I've added several visualization utilities that make use of some stellar R packages, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html). Below, I'll walk through the simulation code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
 
 # Formulating the game
 
@@ -28,9 +28,9 @@ We should note some key characteristics of this formulation. First, a natural bu
 
 The key parameters I've used to define the classical problem include that Monty reveals all except 1 remaining door to be a goat, and that there is 1 prize. Below we'll explore other criteria more in-depth, including the total number of doors in the game. Throughout, I've focused on studying game *win* frequencies, though I could just as easily have assessed loss frequencies. These outcomes are of course associated, since game outcome is a simple binary variable pointing to either win or loss for the player.
 
-Before we dive into the simulation code, I'll show a [pseudocode](https://en.wikipedia.org/wiki/Pseudocode) representation of the classic game formulation. Pseudocode is simply a type of abstraction for programming that is programming language agnostic. For the Monty Hall simulation, the initial pseudocode might be something like:
+Before we dive into the simulation code, I'll show a [pseudocode](https://en.wikipedia.org/wiki/Pseudocode) representation of the classic game. Pseudocode is simply a way of abstracting tasks to be coded while remaining language agnostic. For the Monty Hall simulation, the initial pseudocode might be something like:
 
-* define Monty_Hall_Game:
+* run Monty_Hall_Game:
   + get door_indices from 1:ndoors
   + assign prize_door
   + randomize player_door_index1
@@ -39,20 +39,20 @@ Before we dive into the simulation code, I'll show a [pseudocode](https://en.wik
   + get player_door_index2 as remaining_door_index
   + if player_door_index2 == prize_door, return "win", else "lose"
 
-* function do Monty_Hall_Simulation:
+* run Monty_Hall_Simulation:
   + do Monty_Hall_Game up to num_iterations
   
-I've shown two functions above. In programming, it's often preferred to break a large problem into discrete smaller sub-problems, where solutions for each respective sub-problem can be fine-tuned. This reductionist approach can make debugging and [unit testing](https://en.wikipedia.org/wiki/Unit_testing) *a lot* easier, especially for large and multifaceted projects. Here, I've written a function to simulate a single game, and another to carry out a series of game iterations. Ultimately, I also wrapped the second function inot a third `getfw()` function, to derive win frequencies across simulations. Let's look at the final simulation function in greater detail below.
+I've outlined pseudocode for two functions which loosely correspond to the `mhgame()` and `mhsim()` functions in the `montyhall` package. In programming, it's often preferred to break a large problem into discrete smaller sub-problems, wherein each sub-problem solution can be more easily fine-tuned. This reductionist approach can make debugging and [unit testing](https://en.wikipedia.org/wiki/Unit_testing) *a lot* easier, especially for large and multifaceted projects. With these conceptual formulations of the problem and code tasks, let's look how I tackled these in the simnulation code below.
 
 # The simulation code
 
 I've written 3 functions that allow us to rapidly complete Monty Hall Problem simulations while allowing for modification of various game conditions. First, the `mhgame()` function runs a single game or "game iteration." Second, `mhsim()` executes a series of game iterations that defines a simulation run, up to N = `niter` total game iterations, where every such series uses a single seed for reproducible randomization (more on that below). Finally, `getfw()` takes the output from `mhsim()`, a list of game outcome vectors (either "win" or "loss"), and returns a single vector of win fractions.
 
-Importantly, `mhsim()` [vectorizes](https://en.wikipedia.org/wiki/Automatic_vectorization) game simulations with `lapply()`. Vectorization is a great way to speed up repetitive tasks in coding, and can be crucial for especially memory-taxing or large problems. The `lapply()` function is a member of the `apply` [family](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/lapply) of R functions, which have been specialized for different varieties of vectorization tasks. Some other useful ways of speeding up your code can include parallelization of tasks with [multithreading](https://en.wikipedia.org/wiki/Thread_(computing)#Multithreading). However, note that some parallelization solutions aren't strictly replicable and often require one or several additional dependencies. It's important to tailor the complexity a solution to that of its problem and avoid premature- or over-optimization. For our purposes, running thousands of Monty Hall simulations isn't memory intensive, and our operations below will all complete in about a minute or less.
+Importantly, `mhsim()` [vectorizes](https://en.wikipedia.org/wiki/Automatic_vectorization) game simulations with `lapply()`. Vectorization is a great way to speed up repetitive tasks in coding, and can be crucial for especially memory-taxing or large problems. The `lapply()` function is a member of the `apply` [family](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/lapply) of R functions, which have been specialized for different varieties of vectorization tasks. Some other useful ways of speeding up your code can include parallelization of tasks with [multithreading](https://en.wikipedia.org/wiki/Thread_(computing)#Multithreading). However, note that some parallelization solutions aren't strictly replicable and often require one or several additional dependencies. It's important to tailor the complexity a solution to that of its problem, and thus avoid premature or excessive optimization. For our purposes, running tens of thousands of Monty Hall simulations isn't memory intensive, and our operations below will all complete in about a minute or less.
 
 The arguments `niter` and `seed` in `mhsim()` should be considered for each run. The `niter` argument specifies the number of game iterations to simulate, while setting `seed` specifies the value passed to `set.seed()`. Setting the seed allows for *exact replication* of run results with the same seed, an important component for operations implementing randomness. As already mentioned, the simulation assumes random player selection in stage 2 and occasional random door selection by Monty in stage 3. I've also allowed for the player decision to switch to be modified from "always" (100% of games) to some frequency between 0 and 1. I implemented randomization with the `sample()` R function.
 
-To show how `mhgame()` completes the above pseudocode tasks, let's break down the steps of each game iteration. First, the index of the prize door is specified.
+To show how `mhgame()` delivers on the pseudocode tasks above, I'll describe how it breaks the game into discrete component steps. First, the index of the prize door is specified.
 
 ```
 which.prize <- sample(doorseq, nprize)
@@ -93,9 +93,7 @@ The function then returns a vector of game outcomes (either `win` or `loss`) of 
 
 # Simulating the canonical/classic problem
 
-Let's study the impact of varying the number of simulations and iterations per simulation on the distribution of win frequencies across simulations. We'll start small with just 5 simulations of 2 games, and increase this to 100 and then 1,000 simulations and iterations, respectively. 
-
-I used `getfw()` generate the reproducible game win fraction data. To execute the simulations, I iterated over 3 parameter sets and time it with `Sys.time()`. I used a `for` loop to iterate over the indices of the 3-value parameter vectors where indices are used to retrieve parameters for each run.
+Let's study the impact of varying the number of simulations and iterations per simulation on the distribution of win frequencies across simulations. I started small with just 5 simulations of 2 games (10 total games), and increased to 100 (10,000 games) and 1,000 (1,000,000 games) simulations and iterations, respectively. To execute the simulations, I iterated over 3 parameter sets and time it with `Sys.time()`. I used a `for` loop to iterate over the indices of the 3-value parameter vectors where indices are used to retrieve parameters for each run.
 
 ```
 # parameter sets
@@ -110,7 +108,7 @@ for(s in 1:length(simv)){
 tdif <- Sys.time() - t1
 ```
 
-The 3 runs completed in `r round(tdif, 0)` seconds. With so few iterations and simulations in the first run, there's huge variance in the win fraction (standard deviation of `r round(sd(lr[[1]]), 2)`). Increasing iterations and simulations each to 100 already shows the distribution converging on the expected win frequency of 0.66. Further increase to 1,000 simulations and iterations results in a more clearly normal distribution with much tighter standard deviation of `r round(sd(lr[[3]], 2)`.
+The 3 runs completed in about 27 seconds. With so few iterations and simulations in the first run, there's huge variance in the win fraction (standard deviation of 0.45). Increasing iterations and simulations each to 100 already shows the distribution converging on the expected win frequency of 0.66. Further increase to 1,000 simulations and iterations results in a more clearly normal distribution with much tighter standard deviation of 0.01.
 
 Let's now show the composite plot of win frequency distributions across the 3 runs. Note I've stored the run info (number of simulations and iterations per run) in the list names, and we can unpack these with regular exressions using `gsub()` for the respective plot titles. We'll use `par` to manage the plot output and formatting, where `nrow = c(1, 3)` specifies the plot output conforms to a matrix of 1 row and 3 columns, and `oma = c(3, 3, 3, 1)` adds outer margin whitespace for axis labels. We'll remove redundant axis labels for each plot and add these back with `mtext()`.
 
@@ -134,9 +132,7 @@ mtext("Number of Simulations", side = 2, outer = T)
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf" alt="drawing" width="200"/>
-
-![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf)
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="200"/>
 
 If you prefer to be more precise about the increase in normalcy, we can show greater distribution normalcy by high confidence from the 
 [Shapiro-Wilk Normality test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)
@@ -149,7 +145,7 @@ st2 <- shapiro.test(lr[["100;100"]])$p.value
 st3 <- shapiro.test(lr[["1000;1000"]])$p.value
 ```
 
-With increased simulations and iterations, our p-value increase from `r round(st1, 3)` in the first and smallest run to `r round(st3, 3)` in the third and largest run. Practically, this means confidence to reject the alternative hypothesis (e.g. of non-normality) is decreasing as the underlying simulation win fractions converge on an approximately normal distribution.
+With increased simulations and iterations, our p-value increase from 0.05 in the first and smallest run to 0.58 in the third and largest run. Practically, this means confidence to reject the alternative hypothesis of non-normality decreases as the underlying distributions converge to approximate normality.
 
 # Bending the rules
 
@@ -240,7 +236,7 @@ for(s in sfreq){
 tdif <- Sys.time() - t1
 ```
 
-All runs completed in `r round(as.numeric(tdif), 2)` minutes. The composite plot is then generated from the `plist` plots list as follows.
+All runs completed in about 1 minute. The composite plot is then generated from the `plist` plots list as follows.
 
 ```
 pdf("mh_switchfreq.pdf", 10, 6)
