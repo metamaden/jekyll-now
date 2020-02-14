@@ -4,9 +4,9 @@ title: Cracking the Monty Hall Problem with brute force simulation
 tags: monty_hall; simulation; R; Rstats; ggplot2
 ---
 
-![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png)
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png = 100x100)
 
-On a gameshow stage before you wait three closed doors, behind which have been deposited 2 goats and one prize, respectively. You are called on to pick a door to open and reveal either a goat or a prize. Monty Hall, the gameshow's host, proceeds to reveal a goat behind one of the two unpicked doors. You must then decide whether to stick with your original choice or switch to the final unpicked door. What do you do?
+On a gameshow stage before you wait 3 closed doors, behind which have been deposited 2 goats and 1 prize, respectively. You are called on to pick a door to be opened to reveal either a goat or a prize. Monty Hall, the gameshow's host, proceeds to reveal a goat behind one of the two unpicked doors. You must then decide whether to stick with your original choice or switch to the final unpicked door. What do you do?
 
 This is the [Monty Hall Problem](https://en.wikipedia.org/wiki/Monty_Hall_problem), a kind of logic puzzle involving conditional probability. Assuming you value prizes over goats, and lack prior knowledge about which door has the prize, it can be readily shown that *always* switching doors increases your win probability. If you stick with your first choice, your success probability never exceeds 1 out of 3 tries, while switching increases your probability to 2 out of 3, a pretty substantial increase!
 
