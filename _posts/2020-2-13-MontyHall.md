@@ -54,7 +54,7 @@ The arguments `niter` and `seed` in `mhsim()` should be considered for each run.
 
 To show how `mhgame()` completes the above pseudocode tasks, let's break down the steps of each game iteration. First, the index of the prize door is specified.
 
-```{r}
+```
 which.prize <- sample(doorseq, nprize)
 ```
 
