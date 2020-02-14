@@ -4,9 +4,9 @@ title: Cracking the Monty Hall Problem with brute force simulation
 tags: monty_hall; simulation; R; Rstats; ggplot2
 ---
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" alt="drawing" width="200"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" alt="drawing" width="200" align = "right/>
 
-On a gameshow stage before you wait 3 closed doors, behind which have been deposited 2 goats and 1 prize, respectively. You are called on to pick a door to be opened to reveal either a goat or a prize. Monty Hall, the gameshow's host, proceeds to reveal a goat behind one of the two unpicked doors. You must then decide whether to stick with your original choice or switch to the final unpicked door. What do you do?
+On a gameshow stage before you wait 3 closed doors, behind which have been deposited 2 goats and 1 prize, respectively. You are called on to pick a door to be opened to reveal either a goat or a prize. The host, Monty Hall, then reveals a goat behind one of the two remaining unpicked doors. You must then decide whether to stick with your original choice or switch to the final unpicked door. What do you do?
 
 This is the [Monty Hall Problem](https://en.wikipedia.org/wiki/Monty_Hall_problem), a kind of logic puzzle involving conditional probability. Assuming you value prizes over goats, and lack prior knowledge about which door has the prize, it can be readily shown that *always* switching doors increases your win probability. If you stick with your first choice, your success probability never exceeds 1 out of 3 tries, while switching increases your probability to 2 out of 3, a pretty substantial increase!
 
@@ -216,7 +216,7 @@ We'll lean on these line plot representations using distribution standard deviat
 
 Let's now observe the impact of player switch frequency, or how often the player switches from their initial door selection. As mentioned, this is set by passing the decimal switch frequency to the `doorswitch` argument, which then parses player choice for each iteration from a weighted binomial distribution.
 
-Let's run 10 simulations varying the switch frequency from 0% to 100% in increments of 10%. I'll store the results data in `ldat` and plots in `plist` object, then make a composite plot of the 10 results plots. Note I've also set the x- and y-axis min and max values to be the same in `getlineplot` so that visual comparison is easier.
+Let's run 10 simulations varying the switch frequency from 0% to 100% in increments of 10%. I'll store the results data in `ldat` and plots in `plist`, then show the results in a composite plot. For the plot, note that I've set the x- and y-axis ranges in `getlineplot` to be identical for the 10 results plots to make visual comparison somewhat easier.
 
 ```
 # get fwin dist across ndoors
