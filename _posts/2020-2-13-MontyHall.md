@@ -283,7 +283,7 @@ This brute force simulation approach is one of many possible ways of sloving and
 
 # Bonus plot animations
 
-In data science, more tools in our toolkit means more options for tackling future problems. In this section I'll show how to turn some of the above sequential results lend themselves to nice animations. For this task, I've written the function `getprettygifs()`, which uses the R packages `gganimate` and `magick` and leans heavily on the helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) for the composite gif. Passing options to `plottype` results in either a composite plot of the `ndoors` data (violin and line plots), or a line plot showing how `doorswitch` increase impacts win fraction across games varying `ndoors`.
+In data science, more tools in our toolkit means more options for tackling future problems. In this section I'll show how some results from sequential experiments testing some parameter range (e.g. increasing `ndoors` or `doorswitch`, etc.) lend themselves to nice animations. For this task, I've written the function `getprettygifs()`, which uses the R packages `gganimate` and `magick` and leans heavily on the helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) for the composite gif. Passing options to `plottype` results in either a composite plot of the `ndoors` data (violin and line plots), or a line plot showing how `doorswitch` increase impacts win fraction across games varying `ndoors`.
 
 Let's use the plot gif function to generate the gif files. Note all the data is contained in the `ldat` object, where the final item shows win fraction in relation to door count when the player always switches.
 
