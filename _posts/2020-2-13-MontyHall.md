@@ -105,7 +105,7 @@ if(is.numeric(doorswitch) & doorswitch >= 0 & doorswitch <= 1){
 
 The second player decision is then parsed, and the function returns the game outcome (`win` or `loss`). There's also a `verbose.results` option to return the granual details for each game alongside outcomes, which I used for bug squashing.
 
-# Simulating the canonical/classic problem
+# Simulating the classic problem
 
 Let's study the impact of varying the number of simulations and iterations per simulation on the distribution of win frequencies across simulations. I started small with just 5 simulations of 2 games (10 total games), and increased to 100 (10,000 games) and 1,000 (1,000,000 games) simulations and iterations, respectively. To execute the simulations, I iterated over 3 parameter sets and time it with `Sys.time()`. I used a `for` loop to iterate over the indices of the 3-value parameter vectors where indices are used to retrieve parameters for each run.
 
@@ -124,7 +124,7 @@ tdif <- Sys.time() - t1
 
 The 3 runs completed in about 27 seconds. With so few iterations and simulations in the first run, there's huge variance in the win fraction (standard deviation of 0.45). Increasing iterations and simulations each to 100 already shows the distribution converging on the expected win frequency of 0.66. Further increase to 1,000 simulations and iterations results in a more clearly normal distribution with much tighter standard deviation of 0.01.
 
-Let's now show the composite plot of win frequency distributions across the 3 runs. Note I've stored the run info (number of simulations and iterations per run) in the list names, and we can unpack these with regular exressions using `gsub()` for the respective plot titles. I'll use `par` to manage the plot output and formatting, where `nrow = c(1, 3)` specifies the plot output conforms to a matrix of 1 row and 3 columns, and `oma = c(3, 3, 3, 1)` adds outer margin whitespace for axis labels. I'll remove redundant axis labels for each plot and add these back with `mtext()`.
+Let's now plot the win frequency distributions across the 3 runs. Note I've stored the run info (number of simulations and iterations per run) in the list names, and we can unpack these with [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) using `gsub()` for the respective plot titles. I'll use `par` to manage the plot output and formatting, where `nrow = c(1, 3)` specifies the plot output conforms to a matrix of 1 row and 3 columns, and `oma = c(3, 3, 3, 1)` adds outer margin whitespace for axis labels. I'll remove redundant axis labels for each plot and add these back with `mtext()`.
 
 ```
 pdf("mh_3runs.pdf", 10, 4)
@@ -148,9 +148,8 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="1800"/>
 
-If you prefer to be more precise about the increase in normalcy, we can show greater distribution normalcy by high confidence from the 
-[Shapiro-Wilk Normality test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)
-with `shapiro.test`, where we test the null hypothesis that data were drawn from a normal distribution.
+If you prefer to be more precise about the increase in distribution normality, we can apply the [Shapiro-Wilk Normality test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)
+with `shapiro.test()` to test the null hypothesis that data were drawn from a normal distribution.
 
 ```
 # run normalcy tests
@@ -159,21 +158,21 @@ st2 <- shapiro.test(lr[["100;100"]])$p.value
 st3 <- shapiro.test(lr[["1000;1000"]])$p.value
 ```
 
-With increased simulations and iterations, our p-value increase from 0.05 in the first and smallest run to 0.58 in the third and largest run. Practically, this means confidence to reject the alternative hypothesis of non-normality decreases as the underlying distributions converge to approximate normality.
+With increased simulations and iterations, our p-value increased from 0.05 in the first and smallest run to 0.58 in the third and largest run. In other words, confidence to reject the alternative hypothesis of non-normality decreases as the underlying distributions converge to approximate normality.
 
-# Bending the rules
+# Bending the game rules
 
-I've written the simulation code to execute the Monty Hall problem with its classic characteristics by default, while allowing for modification of certain game rules and conditions. For our purpose, these classic parameters include randomization of the first 3 steps and that Monty reveals all but 1 door between player decisions. Bending the rules and studying the impact to win frequency distributions can help us better understand how the game ticks. In the process, visualizing our simulation results is a compelling way of reinforcing the notion that switching always increases win chances under the classic game rules.
+I've written the simulation code to execute the Monty Hall problem with its classic characteristics by default, while allowing for modification of certain game rules and conditions. For our purposes, these classic parameters include randomization of the first 3 steps and that Monty reveals all but 1 door between player decisions. Changing other game conditions and studying the impact on win frequency distributions can help us better understand how the game ticks. In the process, visualizing our simulation results is a compelling way of reinforcing the notion that switching always increases win chances under the classic game rules.
 
-The first condition I'll explore is the door quantity. This can be set with the `ndoors` argument to `mhsim()`, which in turn gets passed to iterations of `mhgame()`. Practically, this changes the game setup for an interation by defining a vector of sequential door indices of length `ndoors`. Thus setting `ndoors` to some amount greater than 3 will otherwise preserve other classic problem parameters by default.
+The first condition I'll explore is door quantity, which can be set with the `ndoors` argument to `mhsim()`. This value then gets passed to `mhgame()`. In practice this simply sets the `doorseq` vector of door indices to be of length `ndoors`, and subsequent steps proceed as normal.
 
-I've also allowed for changing the frequency with which the player switches doors with `doorswitch`. The default value of 1 means the player switches 100% of the time, and setting this a lower value between 0 and 1 means decreasing the switch frequency. I did this by implementing `sample()` to randomly select from what's essentiallt a weighted binomial distribution (e.g. possible outcomes are binary but each outcome has a distinct weight). If `doorswitch = 0.2`, we parse player decision by sampling from a distribution where 20% of options are "switch" and (100 - 20 = ) 80% of options are "stay".
+The player switch frequency (decision 2) can also be set with `doorswitch`. The default value of 1 means the player switches 100% of the time, and this can be decreased to some decimal between 0 and 1. The player decision (switch or stay) is determined by randomly selecting from a weighted binomial distribution defined by the argument. So if `doorswitch = 0.2`, the player decision is drawn from a distribution where 20% of options are "switch" and (100 - 20 = ) 80% of options are "stay". Again, setting this argument allows other game steps to run as normal.
 
-# Visualizing the "many doors" extrapolation mnemonic
+# Increasing door counts and visualizing the mnemonic device
 
-One of the more useful [mnemonic devices](https://en.wikipedia.org/wiki/Mnemonic) I've encountered for intuiting the answer to the Monty Hall problem is to increase the number of doors. Maybe we're unsure if switching doors will increase our odds when there are just 3 doors. But if there are 100 doors, and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. We can quantitatively visualize this intuitively useful device with the simulation code. 
+A useful [mnemonic device](https://en.wikipedia.org/wiki/Mnemonic) to intuit that we should *always* switch doors is to simply increase the number of doors while preserving the other game rules. Maybe we're unsure if switching doors will increase our win chances with 3 doors. But if there's instead 100 doors and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. As enumerated, we can quantitatively simulate outcome results from increasing the door quantity. Further, visualizing these results effectively can reinforce the intuition gained from this "many doors" mnemonic device.
 
-Let's now generate and time the results from running 100 simulations of 100 iterations each, varying `ndoors` from 3 to 103 by 10, with otherwise classical rule parameters.
+Let's now generate and time the results of running 100 simulations of 100 iterations each. I'll vary `ndoors` from 3 to 103 by 10, with otherwise default settings.
 
 ```
 # get win frequencies from varying ndoors
@@ -191,9 +190,9 @@ tdif <- Sys.time() - t1
 pref <- getlineplot(lnd, ptitle = "Canonical rules, varying doors")
 ```
 
-All runs completed in about 5 seconds. Let's visualize results in a few different ways. First, I'll generate [violin plots](https://en.wikipedia.org/wiki/Violin_plot), a powerful way of visualizing data in a relatively distribution-agnostic manner (and thus typically better than boxplots). Next, I'll use overlapping density plots, variously called "ridge plots" or "joyplots" after their use in the iconic visualization of CP 1919 pulsar's radio waves on the cover of Joy Division's Unknown Pleasures record ([awesome!](https://en.wikipedia.org/wiki/Unknown_Pleasures#Artwork_and_packaging)). Finally, I'll show line plots of run means with confidence boundaries. While the first two plots show the exact data distributions, I'll focus on the third line plots for their economy of space and meaningful reflection of simulation distribution properties.
+All runs completed in about 5 seconds. Let's visualize results in a few different ways. First, I'll generate [violin plots](https://en.wikipedia.org/wiki/Violin_plot), a powerful way of showing density distributions. Because violin plots are relatively distribution-agnostic (e.g. no need to assume or imply distribution normality), they are other superior to traditional boxplots. Next, I'll use overlapping density plots or "ridge plots." These sometimes also called "joyplots" in homage to the iconic cover of Joy Division's Unknown Pleasures record ([awesome!](https://en.wikipedia.org/wiki/Unknown_Pleasures#Artwork_and_packaging)). Finally, I'll show line plots of run means with confidence boundaries. Where violin and ridge plots are relatively faithful representations of the underlying distributions, line plots use space a bit more efficiently and provide key characteristics of the plotted distributions.
 
-To generate these visualizations, I've wrapped the code inot the several plotting utilities functions `getggdat()` (format data for violin and ridge plots), `getlinedat` (format data for line plots), `getlineplot()` (generates line plot), `getprettyplots()` (generate composite of 3 ggplot2 plot types). I won't exhaustively describe these, but will note the code may be generally useful if you're looking for a generalizable way of plotting data for your own data science project. This code makes use of the supremely awesome R packages [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) (powerful plotting functions and meta syntax), [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/index.html) (managing plot outputs and composite plotting),
+To generate the plots, I've wrapped code into the utility functions `getggdat()` (format data for violin and ridge plots), `getlinedat()` (format data for line plots), `getlineplot()` (generate line plot object), `getprettyplots()` (generate composite of 3 ggplot2 plot types). I won't explain these in depth here, but you may find these functions useful as a starting point towards a generalizable method to make these sorts of plots. This code makes use of the supremely awesome R packages that most data scientists will find useful, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) (powerful plotting functions and meta syntax), [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/index.html) (managing plot outputs and composite plotting),
 [`ggridges`](https://cran.r-project.org/web/packages/ggridges/index.html) (ridge plot options).
 
 ```
@@ -204,9 +203,9 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.png" align = "center" alt="mh_ndoors_3plots" width="1800"/>
 
-This quantitatively shows the magnitude of win likelihood increase with `ndoors` increase, reinforcing our intuition about the mnemonic device. It's also interesting to note how the standard deviation converges after the means in runs with higher door counts as the win frequency increase becomes both higher and more certain.
+Thus we have 3 ways of visualizing the win frequency distribution increase following increased door quantity. Interestingly, as door quantity increases, the standard deviation seems to contract slightly after the means show an asymptote, which reflects that win frequency increase becomes both higher and more certain at higher door quantities.
 
-I've allowed for two plot types with the `ribbontype` argument. This defines the gray-colored confidence visualization to be either the standard deviation of run distribution (if `sd`, the default), or the minimum and maximum win frequencies observed (if `minmax`). We can compare these plot types as below.
+I've allowed for two plot types with the `ribbontype` argument, which allow for two types of confidence visualizations (the grey-colored ribbon overlay). This can use either the standard deviation (if `sd`, the default), or the minimum and maximum win frequencies observed (if `minmax`). Let's compare these below.
 
 ```
 pclassic1 <- getlineplot(lnd, ptitle = "Std. dev. overlay", ribbontype = "sd")
@@ -219,13 +218,13 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="900"/>
 
-I'll tend to use `sd` for its greater consistency and utility to describe the underlying win fraction distributions.
+Again, I'll tend to use `sd` as it's more useful to describe the underlying win fraction distributions being plotted.
 
 # What if the player doesn't always switch?
 
-Let's now observe the impact of player switch frequency, or how often the player switches from their initial door selection. As mentioned, this is set by passing the decimal switch frequency to the `doorswitch` argument, which then parses player choice for each iteration from a weighted binomial distribution.
+Next, let's observe the impact of changing the player switch frequency, or how often the player switches from their initial door selection. As mentioned, this is set by passing the decimal switch frequency to the `doorswitch` argument, which then parses player choice for each iteration from a weighted binomial distribution.
 
-Let's run 10 simulations varying the switch frequency from 0% to 100% in increments of 10%. I'll store the results data in `ldat` and plots in `plist`, then show the results in a composite plot. For the plot, note that I've set the x- and y-axis ranges in `getlineplot` to be identical for the 10 results plots to make visual comparison somewhat easier.
+I'll run 10 simulations varying the switch frequency from 0% to 100% in increments of 10%. I'll then store the results in `ldat` and the plots in `plist`. For the results plot, I've set identical x- and y-axis ranges in `getlineplot` to aid with visual comparison.
 
 ```
 # get fwin dist across ndoors
@@ -251,7 +250,7 @@ for(s in sfreq){
 tdif <- Sys.time() - t1
 ```
 
-All runs completed in about 1 minute. The composite plot is then generated from the `plist` plots list as follows.
+All runs completed in about 1 minute. The composite plot can now generated from `plist`.
 
 ```
 pdf("mh_switchfreq.pdf", 10, 6)
@@ -266,9 +265,9 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.png" align = "center" alt="mh_switchfreq" width="1500"/>
 
-Across run sets of each door switch frequency, there's a clear transition from an approximate negative power function (e.g. x ^ -1, top leftmost plot), to something approaching a fractional power function (e.g. x ^ 1/2, bottom rightmost plot). 
+Across run sets of each door switch frequency, there's a clear transition from an approximate negative power function (e.g. x ^ -1, top leftmost plot), to something approaching a fractional power function (e.g. x ^ 1/2, bottom rightmost plot). Note the win fraction only starts to show improvement with door quantity increase when the switch frequency is greater than 50% (bottom, second from leftmost plot), and that win fraction changes for a given switch frequency tend to always form asymptotes.
 
-Increasing run switch frequency incrementally under classical rules should show progressive increase in win fraction distributions. Let's generate and visualize the simulation results for this. Note, I'll appropriate my `getlineplot()` function for this as written, but in some applications it can be better to add code that explicitly handles specific axis variables like `ndoors` and `doorswitch`. The resulting plot shows a clear linear win fraction increase with switch frequency, maxing out at the now-familiar 2/3rds fraction.
+Increasing the switch frequency under classical rules should show progressive win fraction increases. Let's generate and visualize the simulation results for this. Note, I'll appropriate my `getlineplot()` function for this as written, but in some applications it can be better to add code that explicitly handles specific axis variables like `ndoors` and `doorswitch`. The resulting plot shows a clear linear win fraction increase with switch frequency, maxing out at the now-familiar 2/3rds fraction.
 
 ```
 sfreq <- seq(0, 1, 0.1)
