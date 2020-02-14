@@ -272,7 +272,7 @@ getlineplot(lnd, ptitle = "Win Freq. by Switch Freq.",
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="1500"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="900"/>
 
 # Conclusions and analysis extensions
 
