@@ -19,14 +19,14 @@ I've deployed the code with a strictly reproducible vignette in the `montyhall` 
 We can call the typical formulation of the game, as above, the "canonical" or "classical" formulation. This has the following attributes or rules:
 
 1. Three doors total, behind which 1 has a prize, and the remaining 2 have goats.
-2. The player picks a door.
+2. The player picks a door (decision 1).
 3. Monty reveals one of the two remaining doors to be a goat.
-4. The player decides whether to stick with their initial choice (step 2) or switch to the last unpicked door.
+4. The player decides whether to stick with their initial choice or switch to the last unpicked door (decision 2).
 5. The final player-selected door is revealed to be either a goat or the prize.
 
-Note a few characteristics of the above. First, we've framed the player's second decision as "whether to switch", though I'd argue the natural naive interpretation is we're merely picking doors twice more or less at random. Second, there's randomness implied in steps 2 and 3, where the player picks an initial door at random, and 2/3rds of the time Monty chooses randomly between one of two goats to reveal. 
+We should note some key characteristics of this formulation. First, a natural but flawed formulation might state that all the player does is pick a door (decision 1) then pick another door (decision 2). Instead, I've stated the player picks a door (decision 1) then they decide whether to switch doors (decision 2). This distinction is vital because it acknowledges that Monty is providing information that between the decisions that can help our odds of winning if we heed it. Second, there's randomness implied in stages 1 - 3, or in selecting the prize door (stage 1), player picking a door (stage 2/decision 1), and monty revealing a goat (stage 3). The last stage is randomized just 1 out of 3 games, where the player already picked the prize door and Monty decides which remaining goat door to reveal at random.
 
-In terms of semantics, I'll consider certain parameters (e.g. 3 total doors, 1 prize, etc) as the set of "classical" game parameters or rules. Also, I've chosen to assess outcomes using game win frequencies, though I could just as easily have assessed game loss frequencies. But each concept is related in this binary state problem of win or lose, where knowing one outcome determines the other (e.g. a win frequency of 0.66 implies a lose frequency of 1 - 0.66 = 0.34, etc.).
+The key parameters I've used to define the classical problem include that Monty reveals all except 1 remaining door to be a goat, and that there is 1 prize. Below we'll explore other criteria more in-depth, including the total number of doors in the game. Throughout, I've focused on studying game *win* frequencies, though I could just as easily have assessed loss frequencies. These outcomes are of course associated, since game outcome is a simple binary variable pointing to either win or loss for the player.
 
 To simulate the problem in code, pseudocode can be a helpful tool for visualizing the objective. Pseudocode is simply a type of abstraction for programming that is programming language agnostic. For the Monty Hall simulation, the initial pseudocode might be something like:
 
