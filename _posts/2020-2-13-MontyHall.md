@@ -14,7 +14,7 @@ It's telling that the Monty Hall problem, based on an [actual game show](https:/
 
 I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. Deploying work as an R package can be extremely worthwhile in production level data science projects. In writing the code for this package, I've knowingly omitting a few best practices for package authorship, in service to expediency and what I consider more clearly written code. Note there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. Three key functions, `mhgame()`, `mhsim()`, and `getfw()`, manage game simulations and return win frequencies across sets of simulated games. These functions only make use of base R without added dependencies. I've also added several visualization utilities that make use of some stellar R packages for visualizations, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) and ['gridExtra`](https://cran.r-project.org/web/packages/gridExtra/index.html). Below, I'll walk through the simulation code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
 
-# Formulating the game
+# Listing game steps and outlining code objectives with pseudocode
 
 Here's a formulation of the steps in the original Monty Hall problem, as described above:
 
