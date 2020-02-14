@@ -267,7 +267,7 @@ dev.off()
 
 Across run sets of each door switch frequency, there's a clear transition from an approximate negative power function (e.g. x ^ -1, top leftmost plot), to something approaching a fractional power function (e.g. x ^ 1/2, bottom rightmost plot). Note the win fraction only starts to show improvement with door quantity increase when the switch frequency is greater than 50% (bottom, second from leftmost plot), and that win fraction changes for a given switch frequency tend to always form asymptotes.
 
-Increasing the switch frequency under classical rules should show progressive win fraction increases. Let's generate and visualize the simulation results for this. Note, I'll appropriate my `getlineplot()` function for this as written, but in some applications it can be better to add code that explicitly handles specific axis variables like `ndoors` and `doorswitch`. The resulting plot shows a clear linear win fraction increase with switch frequency, maxing out at the now-familiar 2/3rds fraction.
+Increasing the switch frequency under classical rules should show progressive win fraction increases. Let's generate and visualize the simulation results for this. I'll appropriate my `getlineplot()` function, but note that it can be better to explicitly handle different axis variables (e.g. `ndoors` and `doorswitch` here) with discrete code. The resulting plot shows a clear linear win fraction increase with switch frequency, maxing out at the now-familiar value of 0.667.
 
 ```
 sfreq <- seq(0, 1, 0.1)
@@ -287,15 +287,9 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="500"/>
 
-# Conclusions and analysis extensions
+# Animating sequential results
 
-We've explored simulations of the Monty Hall problem using a brute force approach. By exploring changes in win frequency across varying problem conditions, we've proven that always switching doors will increase player win frequency. We've also quantitatively shown how improved win frequency converges as the number of doors is increased. Finally, we explored the role of certain conditions to the problem itself. Unsuprisingly, as player switch frequency increases, so too does win frequency. In so doing, we showed how switch frequency increase leads to different win frequency improvements across doors. 
-
-This brute force simulation approach is one of many possible ways of sloving and exploring the Monty Hall problem, and alternate approaches implementing Bayesian models could lead to further interesting insights. There are several other game conditions that could also be explored. These include changing the total number of doors with prizes, for games of at least 4 doors. Ultimately, I hope this investigation provided some useful code that equips you with a framework for investigating new problems through simulation.
-
-# Bonus plot animations
-
-In data science, more tools in our toolkit means more options for tackling future problems. In this section I'll show how some results from sequential experiments testing some parameter range (e.g. increasing `ndoors` or `doorswitch`, etc.) lend themselves to nice animations. For this task, I've written the function `getprettygifs()`, which uses the R packages `gganimate` and `magick` and leans heavily on the helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) for the composite gif. Passing options to `plottype` results in either a composite plot of the `ndoors` data (violin and line plots), or a line plot showing how `doorswitch` increase impacts win fraction across games varying `ndoors`.
+In data science, more tools in our toolkit means more options for tackling future problems. In this section I'll show how some results from sequential experiments testing some parameter range (e.g. increasing `ndoors` or `doorswitch`, etc.) lend themselves to nice animations. For this task, I've written the function `getprettygifs()`, which uses the R packages [`gganimate`](https://cran.r-project.org/web/packages/gganimate/index.html) and [`magick`](https://cran.r-project.org/web/packages/magick/index.html) and leans heavily on the helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) for the composite gif. Passing options to `plottype` results in either a composite plot of the `ndoors` data (violin and line plots), or a line plot showing how `doorswitch` increase impacts win fraction across games varying `ndoors`.
 
 Let's use the plot gif function to generate the gif files. Note all the data is contained in the `ldat` object, where the final item shows win fraction in relation to door count when the player always switches.
 
@@ -306,3 +300,9 @@ getprettygif(ldat, plottype = "lineplots_doorswitch", gifname = "mh_switchfreq.g
 ![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors.gif](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors.gif)
 
 ![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.gif](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.gif)
+
+# Conclusions and analysis extensions
+
+I've explored simulations of the Monty Hall problem using a brute force approach. By exploring changes in win frequency across varying problem conditions, I've proven that switching doors will tend to increase player win frequency. Next, I quantitatively investigated how always switching doors improves win frequency as door quantity increases, and visualized results to reinforce intuition from the many-doors mnemonic device. Finally, we investigated how player switch frequency modifies win frequency gain or loss across door quantities. This showed recurrent asymptotic win frequency gain or loss, and how win frequency starts to improve with increase door quantity when the player switches over half the time. 
+
+This brute force simulation approach is one of many possible ways of sloving and exploring the Monty Hall problem, and alternate approaches implementing Bayesian models could lead to further interesting insights. There are several other game conditions that could also be explored. These include changing the total number of doors with prizes, for games of at least 4 doors. Ultimately, I hope this investigation provided some useful code that equips you with a framework for investigating new problems through simulation.
