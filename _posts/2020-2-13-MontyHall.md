@@ -10,9 +10,7 @@ This is the [Monty Hall problem](https://en.wikipedia.org/wiki/Monty_Hall_proble
 
 It's telling that the Monty Hall problem, featured in an [actual game show](https://en.wikipedia.org/wiki/Let%27s_Make_a_Deal) from the 1960s, still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classic") rules of the Monty Hall problem while allowing for exploration of how modifications to the underlying rules and conditions can change game outcomes. Hopefully I can inspire you to consider opportunities to tackle new problems with simulation strategies.
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="drawing" width="200" align = "right"/>
-
-**Figure 1.** The hex sticker for `montyhall`, an R package for simulating the Monty Hall problem.
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="The hex sticker for `montyhall`, an R package for simulating the Monty Hall problem." width="200" align = "right"/>
 
 I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. Deploying work as an R package can be extremely worthwhile in production level data science projects. In writing the code for this package, I've knowingly omitting a few best practices for package authorship, in service to expediency and what I consider more clearly written code. Note there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. The 3 key package functions, `mhgame()`, `mhsim()`, and `getfw()`, manage game simulations and return win frequencies across sets of simulated games. These functions only make use of base R without added dependencies. I've also added several visualization utilities that make use of some stellar R packages for visualizations, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) and [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/index.html). Below, I'll walk through the simulation R code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
 
@@ -150,7 +148,7 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="1800"/>
 
-**Figure 2.** Composite histograms of Monty Hall simulation runs using classic parameters. (left) smallest run (5 simulations of 2 games, 10 games total), (middle) intermediate simulation (100 simulations and games, 10,000 total games), (right) large simulation (1,000 simulations and games, 1,000,000 games total).
+**Figure 1.** Composite histograms of Monty Hall simulation runs using classic parameters. At left is smallest run (5 simulations of 2 games, 10 games total), middle is intermediate simulation (100 simulations and games, 10,000 total games), right is largest simulation (1,000 simulations and games, 1,000,000 games total).
 
 If you prefer to be more precise about the increase in distribution normality, we can apply the [Shapiro-Wilk Normality test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)
 with `shapiro.test()` to test the null hypothesis that data were drawn from a normal distribution.
@@ -207,7 +205,7 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.png" align = "center" alt="mh_ndoors_3plots" width="1800"/>
 
-**Figure 3.** Three ways to visualize simulated win fraction distributions across door various quantities. Left, violin plots. Middle, ridge plots. Right, line plot of distribution means (lines) and standard deviation confidences (grey ribbon).
+**Figure 2.** Three ways to visualize simulated win fraction distributions across door various quantities. Left, violin plots. Middle, ridge plots. Right, line plot of distribution means (lines) and standard deviation confidences (grey ribbon).
 
 Thus we have 3 ways of visualizing the win frequency distribution increase following increased door quantity. Interestingly, as door quantity increases, the standard deviation seems to contract slightly after the means show an asymptote, which reflects that win frequency increase becomes both higher and more certain at higher door quantities.
 
@@ -224,7 +222,7 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="900"/>
 
-**Figure 4.** Line plot comparison showing 2 ways of visualizing win fraction distributions with door quantity. Left, grey confidence ribbon calculated using standard deviation. Right, confidences calculated from observed distribution minima and maxima.
+**Figure 3.** Line plot comparison showing 2 ways of visualizing win fraction distributions with door quantity. Left, grey confidence ribbon calculated using standard deviation. Right, confidences calculated from observed distribution minima and maxima.
 
 Again, I'll tend to use `sd` as it's more useful to describe the underlying win fraction distributions being plotted.
 
@@ -273,6 +271,8 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.png" align = "center" alt="mh_switchfreq" width="1500"/>
 
+**Figure 4.** Composite line plots of ten simulation sets varying player switch frequency/fraction and door counts. Top row, first run to fifth run varying switch frequnecy from 0% to 40%. Bottom row, sixth run to final run varying switch frequency from 50% to 90%.
+
 Across run sets of each door switch frequency, there's a clear transition from an approximate negative power function (e.g. x ^ -1, top leftmost plot), to something approaching a fractional power function (e.g. x ^ 1/2, bottom rightmost plot). Note the win fraction only starts to show improvement with door quantity increase when the switch frequency is greater than 50% (bottom, second from leftmost plot), and that win fraction changes for a given switch frequency tend to always form asymptotes.
 
 Increasing the switch frequency under classical rules should show progressive win fraction increases. Let's generate and visualize the simulation results for this. I'll appropriate my `getlineplot()` function, but note that it can be better to explicitly handle different axis variables (e.g. `ndoors` and `doorswitch` here) with discrete code. The resulting plot shows a clear linear win fraction increase with switch frequency, maxing out at the now-familiar value of 0.667.
@@ -295,6 +295,8 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="500"/>
 
+**Figure 5.** Simulation results from varying switch frequency using only classic Monty Hall rules/parameters (function defaults).
+
 # Animating results plots
 
 In data science, more tools in our toolkit means more options for tackling future problems. Here, I'll illustrate how the `ggplot2` meta syntax can be readily leveraged to generate useful plot animations. I've written the `getprettygifs()` function using the [`gganimate`](https://cran.r-project.org/web/packages/gganimate/index.html) and [`magick`](https://cran.r-project.org/web/packages/magick/index.html) packages and helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) to generate animated gifs of some of the plots above. I'll generate these gifs using the results stored in the `ldat` list.
@@ -305,7 +307,11 @@ getprettygif(ldat, plottype = "lineplots_doorswitch", gifname = "mh_switchfreq.g
 ```
 ![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors.gif](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors.gif)
 
+**Figure 6.** Animation of win fraction distributions from varying door quantity with otherwise classic rules. Left is violin plot animation, right is line plot animation. Title describes the nearest frame displayed.
+
 ![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.gif](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.gif)
+
+**Figure 7.** Animation of line plots showing win fraction distributions from varying player switch frequency and door quantities. Title describes the nearest frame displayed.
 
 # Conclusions and analysis extensions
 
