@@ -93,9 +93,9 @@ The function then returns a vector of game outcomes (either `win` or `loss`) of 
 
 # Simulating the canonical/classic problem
 
-Let's study the impact of varying the number of simulations and iterations per simulation on the distribution of win frequencies across simulations. We'll start small with just 5 simulations of 2 games, and increase this to 100 and then 1,000 simulations and iterations, respectively. We can use the wrapper function `getfw` to generate and store the reproducible simulation data.
+Let's study the impact of varying the number of simulations and iterations per simulation on the distribution of win frequencies across simulations. We'll start small with just 5 simulations of 2 games, and increase this to 100 and then 1,000 simulations and iterations, respectively. 
 
-Let's generate the simulation data with the 3 parameter sets, and time it. Note we'll use a `for` loop to iterate over vectors of 3 values for simulations and iterations, using the given index to point to the parameters for each run.
+I used `getfw()` generate the reproducible game win fraction data. To execute the simulations, I iterated over 3 parameter sets and time it with `Sys.time()`. I used a `for` loop to iterate over the indices of the 3-value parameter vectors where indices are used to retrieve parameters for each run.
 
 ```
 # parameter sets
