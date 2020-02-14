@@ -42,7 +42,7 @@ Before we dive into the simulation code, I'll show a [pseudocode](https://en.wik
 * function do Monty_Hall_Simulation:
   + do Monty_Hall_Game up to num_iterations
   
-I've shown two functions above. In programming, it's often preferred to break a problem down into discrete and smaller units that achieve distinct objectives. This can make debugging and unit testing (a lot) easier. Here, I've written a function to simulate a single game, and another to carry out a series of game iterations. Ultimately, I also wrapped the second function inot a third `getfw()` function, to derive win frequencies across simulations. Let's look at the final simulation function in greater detail below.
+I've shown two functions above. In programming, it's often preferred to break a large problem into discrete smaller sub-problems, where solutions for each respective sub-problem can be fine-tuned. This reductionist approach can make debugging and [unit testing](https://en.wikipedia.org/wiki/Unit_testing) *a lot* easier, especially for large and multifaceted projects. Here, I've written a function to simulate a single game, and another to carry out a series of game iterations. Ultimately, I also wrapped the second function inot a third `getfw()` function, to derive win frequencies across simulations. Let's look at the final simulation function in greater detail below.
 
 # The simulation function
 
