@@ -224,6 +224,8 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="900"/>
 
+**Figure 4.** Line plot comparison showing 2 ways of visualizing win fraction distributions with door quantity. Left, grey confidence ribbon calculated using standard deviation. Right, confidences calculated from observed distribution minima and maxima.
+
 Again, I'll tend to use `sd` as it's more useful to describe the underlying win fraction distributions being plotted.
 
 # What if the player doesn't always switch?
