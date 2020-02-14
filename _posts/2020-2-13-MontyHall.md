@@ -289,9 +289,7 @@ dev.off()
 
 # Animating sequential results
 
-In data science, more tools in our toolkit means more options for tackling future problems. In this section I'll show how some results from sequential experiments testing some parameter range (e.g. increasing `ndoors` or `doorswitch`, etc.) lend themselves to nice animations. For this task, I've written the function `getprettygifs()`, which uses the R packages [`gganimate`](https://cran.r-project.org/web/packages/gganimate/index.html) and [`magick`](https://cran.r-project.org/web/packages/magick/index.html) and leans heavily on the helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) for the composite gif. Passing options to `plottype` results in either a composite plot of the `ndoors` data (violin and line plots), or a line plot showing how `doorswitch` increase impacts win fraction across games varying `ndoors`.
-
-Let's use the plot gif function to generate the gif files. Note all the data is contained in the `ldat` object, where the final item shows win fraction in relation to door count when the player always switches.
+In data science, more tools in our toolkit means more options for tackling future problems. Sequential experiments testing a range of parameter values (e.g. increasing `ndoors`, increasing `doorswitch`, etc.) can naturally lend themselves to pleasing animations. I've written the `getprettygifs()` function using the [`gganimate`](https://cran.r-project.org/web/packages/gganimate/index.html) and [`magick`](https://cran.r-project.org/web/packages/magick/index.html) packages and helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) to generate animated gifs of some of the plots above. I'll generate these gifs using the results stored in the `ldat` list.
 
 ```
 getprettygif(ldat[[11]], plottype = "composite_ndoors", gifname = "mh_ndoors.gif")
