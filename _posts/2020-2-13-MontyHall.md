@@ -8,15 +8,15 @@ On a game show stage before you wait 3 closed doors, behind which have been depo
 
 This is the [Monty Hall problem](https://en.wikipedia.org/wiki/Monty_Hall_problem), a kind of logic puzzle involving conditional probability. Given that you value prizes over goats and lack prior knowledge about which door the prize is behind, it can be readily shown that switching doors *always* increases your win probability. If you stick with your first choice, your success frequency never exceeds 1 of 3 games, while switching increases this to 2 of 3, a pretty substantial improvement!
 
-It's telling that the Monty Hall problem, based on an [actual game show](https://en.wikipedia.org/wiki/Let%27s_Make_a_Deal) from the 1960s, still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classical") rules of the Monty Hall problem while allowing for exploration of how modifications to the underlying rules and conditions can chanage game outcomes. Hopefully I can inspire you to think generally about opportunities to conceptualize problems in simulations with useful code.
+It's telling that the Monty Hall problem, featured in an [actual game show](https://en.wikipedia.org/wiki/Let%27s_Make_a_Deal) from the 1960s, still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classic") rules of the Monty Hall problem while allowing for exploration of how modifications to the underlying rules and conditions can chanage game outcomes. Hopefully I can inspire you to think generally about opportunities to conceptualize problems in simulations with useful code.
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="drawing" width="200" align = "right"/>
 
-I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. Deploying work as an R package can be extremely worthwhile in production level data science projects. In writing the code for this package, I've knowingly omitting a few best practices for package authorship, in service to expediency and what I consider more clearly written code. Note there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. Three key functions, `mhgame()`, `mhsim()`, and `getfw()`, manage game simulations and return win frequencies across sets of simulated games. These functions only make use of base R without added dependencies. I've also added several visualization utilities that make use of some stellar R packages for visualizations, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) and ['gridExtra`](https://cran.r-project.org/web/packages/gridExtra/index.html). Below, I'll walk through the simulation R code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
+I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. Deploying work as an R package can be extremely worthwhile in production level data science projects. In writing the code for this package, I've knowingly omitting a few best practices for package authorship, in service to expediency and what I consider more clearly written code. Note there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. Three key functions, `mhgame()`, `mhsim()`, and `getfw()`, manage game simulations and return win frequencies across sets of simulated games. These functions only make use of base R without added dependencies. I've also added several visualization utilities that make use of some stellar R packages for visualizations, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html) and [`gridExtra`](https://cran.r-project.org/web/packages/gridExtra/index.html). Below, I'll walk through the simulation R code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
 
 # Listing game steps and outlining code objectives with pseudocode
 
-Here's a formulation of the steps in the original Monty Hall problem, as described above:
+Here's a formulation of the steps in the classic Monty Hall problem, as described above:
 
 1. Three doors total, behind which 1 has a prize, and the remaining 2 have goats.
 2. The player picks a door (player decision 1).
@@ -24,9 +24,9 @@ Here's a formulation of the steps in the original Monty Hall problem, as describ
 4. The player decides whether to stick with their initial choice or switch to the last unpicked door (player decision 2).
 5. Game outcome is determined by whether the final player-selected door reveals either a prize (win) or a goat (loss).
 
-We should note some key characteristics of this formulation. First, an initial naive formulation might simply have that the player simply picks a door twice, with Monty doing something or other in between. Instead, I've stated the player picks a door (step 2/decision 1) then decides whether to switch doors (step 4/decision 2). This distinction is vital because in the second decision we have new information from Monty's reveal in step 3 that can help our win chances if we know to heed it. Also note there's implied randomness in the first 3 steps. That is, the prize door is set at random (step 1), the player picks their initial door at random (step 2/player decision 1), and Monty will occasionally reveal a goat at random (step 3). To clarify, randommization occurs in step 3 just a third of the time, specifically whenever the player first picked the prize door and thus leaves Monty to decide between one of two goats to reveal.
+There are a few key aspects to this formulation. An initial naive formulation might simply have that the player simply picks a door twice, with Monty doing something or other in between. Instead, I've stated the player picks a door (step 2/decision 1) then decides whether to switch doors (step 4/decision 2). This distinction is vital because Monty's step 3 reveal provides new information that can help our win chances if we know to heed it in the second player decision. Additionally, randomness is implied in first 3 steps. That is, the prize door is set randomly (step 1), the player picks picks an initial door randomly (step 2/player decision 1), and one third of the time Monty will reveal a goat at random (step 3).
 
-Before we dive into the simulation code, I'll next show a [pseudocode](https://en.wikipedia.org/wiki/Pseudocode) outline of tasks the code needs to accomplish to simulate the game with classic parameters. Pseudocode is simply a way of abstracting coding tasks that has the convenience of being programming language-agnostic. For the Monty Hall simulation, the initial pseudocode might be something like:
+Before we dive into the simulation code, I'll represent the problem using [pseudocode](https://en.wikipedia.org/wiki/Pseudocode) to outline tasks the code needs to accomplish. Pseudocode is simply a way of abstracting tasks for programming that has the convenience of being language-agnostic. Pseudocode for the classic problem might be something like:
 
 * run Monty_Hall_Game:
   + get door_indices from 1:ndoors
@@ -40,15 +40,15 @@ Before we dive into the simulation code, I'll next show a [pseudocode](https://e
 * run Monty_Hall_Simulation:
   + do Monty_Hall_Game up to num_iterations
   
-I've outlined pseudocode for two functions which loosely correspond to the `mhgame()` and `mhsim()` functions in the `montyhall` package. In programming, it's often preferred to break a large problem into discrete smaller sub-problems, wherein each sub-problem solution can be more easily fine-tuned. This reductionist approach can make debugging and [unit testing](https://en.wikipedia.org/wiki/Unit_testing) *a lot* easier, especially as projects increase in complexity. With these conceptual formulations of the classic Monty Hall problem, let's next look at how I wrote the simulation code.
+This code outlines two functions loosely corresponding to the `mhgame()` and `mhsim()` functions in the R package. In programming, it's often preferable to break a large problem into smaller sub-problems so that each sub-problem solution can be more readily fine-tuned. This reductive coding approach can make debugging and [unit testing](https://en.wikipedia.org/wiki/Unit_testing) *a lot* easier, especially as projects increase in complexity. With these conceptual formulations of the problem in mind, let's look at how I wrote the simulation code.
 
 # The simulation R code
 
-I've written 3 functions that allow us to rapidly complete Monty Hall problem simulations while allowing for modification of various game conditions. First, the `mhgame()` function runs a single game or "game iteration." Second, `mhsim()` executes a series of game iterations that defines a simulation run, up to N = `niter` total game iterations. Finally, `getfw()` takes the output from `mhsim()`, a list of game outcome vectors (either "win" or "loss"), and returns a single vector of win fractions.
+I've written 3 functions to help run the game simulations. First, the `mhgame()` function runs a single game or "game iteration." Second, `mhsim()` executes a series of game iterations that defines a simulation run, up to N = `niter` total game iterations. Finally, `getfw()` takes the output from `mhsim()`, a list of game outcome vectors (either "win" or "loss"), and returns a single vector of win fractions.
 
-Importantly, `mhsim()` [vectorizes](https://en.wikipedia.org/wiki/Automatic_vectorization) game simulations with `lapply()`. Vectorization is a great way to speed up repetitive coding tasks that may otherwise be reflexively implemented in inefficient loops. The `lapply()` function is a member of the `apply` [family](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/lapply) of R functions, which have been specialized for different varieties of vectorization tasks. Some other useful ways of speeding up your code can include parallelization of tasks with [multithreading](https://en.wikipedia.org/wiki/Thread_(computing)#Multithreading). However, note that some parallelization solutions aren't strictly replicable (e.g. tasks return as they finish in non-determined fashion) and may require additional code and dependencies. It's important to tailor the complexity a solution to that of its problem, and thus avoid premature or excessive optimization. For our purposes, running tens of thousands of Monty Hall simulations isn't memory intensive, and our operations below will all complete in about a minute or less.
+Importantly, `mhsim()` [vectorizes](https://en.wikipedia.org/wiki/Automatic_vectorization) game simulations with `lapply()`. Vectorization is a great way to speed up repetitive coding tasks that may otherwise be reflexively implemented in inefficient loops. The `lapply()` function is a member of the `apply` [family](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/lapply) of R functions, which have been specialized for different varieties of vectorization tasks. Some other useful ways of speeding up your code can include parallelization of tasks with [multithreading](https://en.wikipedia.org/wiki/Thread_(computing)#Multithreading). However, note that some parallelization solutions aren't strictly replicable (e.g. tasks return as they finish in non-determined fashion) and may require additional code and dependencies. It's ideal to tailor the solution complexity to that of its problem. For our purposes, running tens of thousands of Monty Hall simulations isn't memory intensive, and each operation completes in about a minute or less.
 
-In `mhsim()`, the `niter` argument specifies the number of game iterations to simulate, and `seed` specifies the value passed to `set.seed()`. Setting the seed allows for *exact replication* of run results even where randomization is implemented. Again, randomization is assumed in several of the game steps, and I achived with with the `sample()` function.
+In `mhsim()`, the `niter` argument specifies the number of game iterations to simulate, and the `seed` argument specifies the seed passed to `set.seed()`. Setting the seed allows for *exact replication* of run results even where randomization is implemented. I performed randomization steps using the `sample()` function.
 
 To show how `mhgame()` delivers on the pseudocode tasks above, I'll describe how it breaks the game into discrete component steps. First, the index of the prize door is specified.
 
@@ -56,38 +56,54 @@ To show how `mhgame()` delivers on the pseudocode tasks above, I'll describe how
 which.prize <- sample(doorseq, nprize)
 ```
 
-Then the player's first decision is simulated.
+Then the player's first decision is simulated, where `ndec1` is the quantity of doors selected in this step (defaults to 1).
 
 ```
 dec1select <- sample(doorseq, ndec1)
 ```
 
-Next, Monty reveals a goat. This entails either selecting 1 of 2 doors at random (e.g. if the player already picked the prize door, an unlikely event), or simply picking the last remaining door (e.g. if the player already picked a goat door, a likely event).
+Next, Monty reveals a goat. In total, `nr` doors are selected from remaining door options in `doorremain1`, with a few added sanity checks and provisions for extensions such as increasing the prize count. Note if there are 2 valid door options, Monty selects one at random, and otherwise reveals the only valid door available.
 
 ```
-mdooroptions <- doorremain1[!doorremain1 %in% which.prize]
-if(length(mdooroptions) < 2){
-  mselect <- mdooroptions
-} else{
-  mselect <- sample(mdooroptions, nr)
+# run montyselect
+doorremain1 <- doorseq[!doorseq == dec1select] # exclude player first selection
+nr <- length(doorremain1) - nrevealdif # calculate the reveal difference
+# validate reveal difference value
+if(nr < 0 | nr > length(doorremain1) - 1){
+  stop("Too many doors specified for Monty to reveal. Increase `nrevealdif`.")
 }
-```
-
-We check that the number of remaining "non-revealed" doors specified by `nrevealdif` is valid for the problem, then proceed to either specify a random set ofdoor indices to reveal or the only remaining valid door.
-
-Next, the player either switches or stays on their initial door selection. Note how switch frequency from `doorswitch` impacts the likelihood of passing `switch` or `stay` to `ssvar`.
-
-```
-if(ssvar == "switch"){
-  if(length(doorremain2) > 1){
-    dec2select <- sample(doorremain2, ndec2)
+if(montyselect == "random"){
+  # if more than 1 prize, allow monty to reveal n - 1 prizes
+  if(length(which.prize) > 1){
+    mdooroptions <- doorremain1
   } else{
-    dec2select <- doorremain2
+    mdooroptions <- doorremain1[!doorremain1 %in% which.prize]
+  }
+  if(length(mdooroptions) < 2){
+    mselect <- mdooroptions
+  } else{
+    mselect <- sample(mdooroptions, nr)
   }
 }
 ```
 
-The function then returns a vector of game outcomes (either `win` or `loss`) of length equal to `niter`. I've also included a `verbose.results` option that stores the granual game details for each iteration alongside outcome. I mainly included this for bug squashing.
+Next, we determine the second player decision of whether to switch or stay with their original picked door. The player decision is selected from a weighted binomial distribution (details below), where the default is to always switch doors.
+
+```
+# run decision 2
+# exclude monty's doors and decision 1 doors from switch options
+doorremain2 <- doorseq[!doorseq %in% c(mselect, dec1select)]
+# parse switch likelihood
+if(is.numeric(doorswitch) & doorswitch >= 0 & doorswitch <= 1){
+  ssvar <- ifelse(doorswitch == 1, "switch", 
+                  sample(c(rep("switch", 100*doorswitch), 
+                           rep("stay", 100 - 100*doorswitch)), 1))
+} else{
+  stop("Invalid doorswitch value.")
+}
+```
+
+The second player decision is then parsed, and the function returns the game outcome (`win` or `loss`). There's also a `verbose.results` option to return the granual details for each game alongside outcomes, which I used for bug squashing.
 
 # Simulating the canonical/classic problem
 
