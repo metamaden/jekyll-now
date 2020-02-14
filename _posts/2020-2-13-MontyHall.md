@@ -287,9 +287,9 @@ dev.off()
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="500"/>
 
-# Animating sequential results
+# Animating results plots
 
-In data science, more tools in our toolkit means more options for tackling future problems. Sequential experiments testing a range of parameter values (e.g. increasing `ndoors`, increasing `doorswitch`, etc.) can naturally lend themselves to pleasing animations. I've written the `getprettygifs()` function using the [`gganimate`](https://cran.r-project.org/web/packages/gganimate/index.html) and [`magick`](https://cran.r-project.org/web/packages/magick/index.html) packages and helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) to generate animated gifs of some of the plots above. I'll generate these gifs using the results stored in the `ldat` list.
+In data science, more tools in our toolkit means more options for tackling future problems. Here, I'll illustrate how the `ggplot2` meta syntax can be readily leveraged to generate useful plot animations. I've written the `getprettygifs()` function using the [`gganimate`](https://cran.r-project.org/web/packages/gganimate/index.html) and [`magick`](https://cran.r-project.org/web/packages/magick/index.html) packages and helpful code provided [here](https://github.com/thomasp85/gganimate/wiki/Animation-Composition) to generate animated gifs of some of the plots above. I'll generate these gifs using the results stored in the `ldat` list.
 
 ```
 getprettygif(ldat[[11]], plottype = "composite_ndoors", gifname = "mh_ndoors.gif")
