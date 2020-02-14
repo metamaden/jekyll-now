@@ -127,7 +127,7 @@ The 3 runs completed in about 27 seconds. With so few iterations and simulations
 Let's now plot the win frequency distributions across the 3 runs. Note I've stored the run info (number of simulations and iterations per run) in the list names, and we can unpack these with [regular expressions](https://en.wikipedia.org/wiki/Regular_expression) using `gsub()` for the respective plot titles. I'll use `par` to manage the plot output and formatting, where `nrow = c(1, 3)` specifies the plot output conforms to a matrix of 1 row and 3 columns, and `oma = c(3, 3, 3, 1)` adds outer margin whitespace for axis labels. I'll remove redundant axis labels for each plot and add these back with `mtext()`.
 
 ```
-pdf("mh_3runs.pdf", 10, 4)
+png("mh_3runs.png", width = 10, height = 4, units = "in", res = 400)
 # format image output
 par(mfrow = c(1, 3), oma = c(3, 3, 3, 1))
 for(r in 1:length(lr)){
@@ -198,7 +198,7 @@ To generate the plots, I've wrapped code into the utility functions `getggdat()`
 [`ggridges`](https://cran.r-project.org/web/packages/ggridges/index.html) (ridge plot options).
 
 ```
-pdf("mh_ndoors_3plots.pdf", 10, 4)
+png("mh_ndoors_3plots.png", width = 10, height = 4, units = "in", res = 400)
 getprettyplots(lnd, "Varying door count")
 dev.off()
 ```
@@ -215,7 +215,7 @@ I've allowed for two plot types with the `ribbontype` argument, which allow for 
 pclassic1 <- getlineplot(lnd, ptitle = "Std. dev. overlay", ribbontype = "sd")
 pclassic2 <- getlineplot(lnd, ptitle = "Min. max. overlay", ribbontype = "minmax")
 
-pdf("mh_2lineplots.pdf", 5, 3)
+png("mh_2lineplots.png", width = 5, height = 3, units = "in", res = 400)
 grid.arrange(pclassic1, pclassic2, top = "Ribbon overlay comparison", ncol = 2)
 dev.off()
 ```
@@ -259,7 +259,7 @@ tdif <- Sys.time() - t1
 All runs completed in about 1 minute. The composite plot can now generated from `plist`.
 
 ```
-pdf("mh_switchfreq.pdf", 10, 6)
+png("mh_switchfreq.png", width = 10, height = 6, units = "in", res = 400)
 grid.arrange(plist[[1]], plist[[2]], plist[[3]],
              plist[[4]], plist[[5]], plist[[6]],
              plist[[7]], plist[[8]], plist[[9]],
@@ -286,7 +286,7 @@ for(s in sfreq){
   fw <- getfw(simi, iteri, doorswitch = s)
   lnd[[paste0(s)]] <- fw
 }
-pdf("mh_switchfreq_classicrules.pdf", 4, 4)
+png("mh_switchfreq_classicrules.png", width = 4, height = 4, res = 400, units = "in")
 getlineplot(lnd, ptitle = "Win Freq. by Switch Freq.", 
             xlim = c(0, 1), ylim = c(0, 1), 
             xlab = "Switch frequency")
