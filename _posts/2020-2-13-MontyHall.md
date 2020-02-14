@@ -187,7 +187,8 @@ pdf("mh_ndoors_3plots.pdf", 10, 4)
 getprettyplots(lnd, "Varying door count")
 dev.off()
 ```
-![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.pdf)
+
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.png" align = "center" alt="mh_ndoors_3plots" width="200"/>
 
 This quantitatively shows the magnitude of win likelihood increase with `ndoors` increase, reinforcing our intuition about the mnemonic device. It's also interesting to note how the standard deviation converges after the means in runs with higher door counts as the win frequency increase becomes both higher and more certain.
 
@@ -202,7 +203,7 @@ grid.arrange(pclassic1, pclassic2, top = "Ribbon overlay comparison", ncol = 2)
 dev.off()
 ```
 
-![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.pdf)
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="200"/>
 
 We'll lean on these line plot representations using distribution standard deviations to calculate the overlaid ribbons.
 
@@ -248,7 +249,8 @@ grid.arrange(plist[[1]], plist[[2]], plist[[3]],
              bottom = "Number of Doors", left = "Win Fraction")
 dev.off()
 ```
-![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.pdf)
+
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.png" align = "center" alt="mh_switchfreq" width="200"/>
 
 Across run sets of each door switch frequency, there's a clear transition from an approximate negative power function (e.g. x ^ -1, top leftmost plot), to something approaching a fractional power function (e.g. x ^ 1/2, bottom rightmost plot). 
 
@@ -269,7 +271,8 @@ getlineplot(lnd, ptitle = "Win Freq. by Switch Freq.",
             xlab = "Switch frequency")
 dev.off()
 ```
-![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.pdf)
+
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="200"/>
 
 # Conclusions and analysis extensions
 
