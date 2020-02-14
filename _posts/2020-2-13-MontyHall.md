@@ -1,14 +1,14 @@
 ---
 layout: post
-title: Cracking the Monty Hall Problem with brute force simulation
+title: Cracking the Monty Hall problem with brute force simulation
 tags: monty_hall; simulation; R; Rstats; ggplot2
 ---
 
 On a game show stage before you wait 3 closed doors, behind which have been deposited 2 goats and 1 prize, respectively. You are called on to pick a door to be opened to reveal either a goat or a prize. The host, Monty Hall, then reveals a goat behind one of the two remaining unpicked doors. You are then given the option to switch your door selection to the final unpicked door before the big reveal. What should you do?
 
-This is the [Monty Hall Problem](https://en.wikipedia.org/wiki/Monty_Hall_problem), a kind of logic puzzle involving conditional probability. Given that you value prizes over goats and lack prior knowledge about which door the prize is behind, it can be readily shown that switching doors *always* increases your win probability. If you stick with your first choice, your success probability never exceeds 1 out of 3, while switching increases your probability to 2 out of 3, a pretty substantial improvement!
+This is the [Monty Hall problem](https://en.wikipedia.org/wiki/Monty_Hall_problem), a kind of logic puzzle involving conditional probability. Given that you value prizes over goats and lack prior knowledge about which door the prize is behind, it can be readily shown that switching doors *always* increases your win probability. If you stick with your first choice, your success probability never exceeds 1 out of 3, while switching increases your probability to 2 out of 3, a pretty substantial improvement!
 
-It's telling that the Monty Hall Problem, based on an [actual game show](https://en.wikipedia.org/wiki/Let%27s_Make_a_Deal) from the 1960s, still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classical") rules of the Monty Hall Problem while allowing for exploration of how modifications to the underlying rules and conditions can chanage game outcomes. Hopefully I can inspire you to think generally about opportunities to conceptualize problems in simulations with useful code.
+It's telling that the Monty Hall problem, based on an [actual game show](https://en.wikipedia.org/wiki/Let%27s_Make_a_Deal) from the 1960s, still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classical") rules of the Monty Hall problem while allowing for exploration of how modifications to the underlying rules and conditions can chanage game outcomes. Hopefully I can inspire you to think generally about opportunities to conceptualize problems in simulations with useful code.
 
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="drawing" width="200" align = "right"/>
 
@@ -16,7 +16,7 @@ I've deployed the simulation code with a strictly reproducible vignette in the [
 
 # Formulating the game
 
-Here's a formulation of the steps in the original Monty Hall Problem, as described above:
+Here's a formulation of the steps in the original Monty Hall problem, as described above:
 
 1. Three doors total, behind which 1 has a prize, and the remaining 2 have goats.
 2. The player picks a door (player decision 1).
@@ -24,11 +24,9 @@ Here's a formulation of the steps in the original Monty Hall Problem, as describ
 4. The player decides whether to stick with their initial choice or switch to the last unpicked door (player decision 2).
 5. Game outcome is determined by whether the final player-selected door reveals either a prize (win) or a goat (loss).
 
-We should note some key characteristics of this formulation. First, a natural but flawed formulation might state that all the player does is pick a door (decision 1) then pick another door (decision 2). Instead, I've stated the player picks a door (decision 1) then they decide whether to switch doors (decision 2). This distinction is vital because it acknowledges that Monty's reveal provides information that can help our win chances if we know to heed it. Second, there's randomness implied in steps 1 - 3. That is, the prize door is selected at random (step 1), the player picks their initial door at random (step 2/player decision 1), and monty occasionally reveals a goat at random (step 3). Note that step 3 includes randomization a third of the time, specifically whenever the player first picked the prize door and thus leaves Monty to decide between one of two goats to reveal.
+We should note some key characteristics of this formulation. First, an initial naive formulation might simply have that the player simply picks a door twice, with Monty doing something or other in between. Instead, I've stated the player picks a door (step 2/decision 1) then decides whether to switch doors (step 4/decision 2). This distinction is vital because in the second decision we have new information from Monty's reveal in step 3 that can help our win chances if we know to heed it. Also note there's implied randomness in the first 3 steps. That is, the prize door is set at random (step 1), the player picks their initial door at random (step 2/player decision 1), and Monty will occasionally reveal a goat at random (step 3). To clarify, randommization occurs in step 3 just a third of the time, specifically whenever the player first picked the prize door and thus leaves Monty to decide between one of two goats to reveal.
 
-The key parameters I've used to define the classical problem include that Monty reveals all except 1 remaining door to be a goat, and that there is 1 prize. Below we'll explore other criteria more in-depth, including the total number of doors in the game. Throughout, I've focused on studying game *win* frequencies, though I could just as easily have assessed loss frequencies. These outcomes are of course associated, since game outcome is a simple binary variable pointing to either win or loss for the player.
-
-Before we dive into the simulation code, I'll show a [pseudocode](https://en.wikipedia.org/wiki/Pseudocode) representation of the classic game. Pseudocode is simply a way of abstracting tasks to be coded while remaining language agnostic. For the Monty Hall simulation, the initial pseudocode might be something like:
+Before we dive into the simulation code, I'll next show a [pseudocode](https://en.wikipedia.org/wiki/Pseudocode) outline of tasks the code needs to accomplish to simulate the game with classic parameters. Pseudocode is simply a way of abstracting coding tasks that has the convenience of being programming language-agnostic. For the Monty Hall simulation, the initial pseudocode might be something like:
 
 * run Monty_Hall_Game:
   + get door_indices from 1:ndoors
@@ -46,7 +44,7 @@ I've outlined pseudocode for two functions which loosely correspond to the `mhga
 
 # The simulation code
 
-I've written 3 functions that allow us to rapidly complete Monty Hall Problem simulations while allowing for modification of various game conditions. First, the `mhgame()` function runs a single game or "game iteration." Second, `mhsim()` executes a series of game iterations that defines a simulation run, up to N = `niter` total game iterations, where every such series uses a single seed for reproducible randomization (more on that below). Finally, `getfw()` takes the output from `mhsim()`, a list of game outcome vectors (either "win" or "loss"), and returns a single vector of win fractions.
+I've written 3 functions that allow us to rapidly complete Monty Hall problem simulations while allowing for modification of various game conditions. First, the `mhgame()` function runs a single game or "game iteration." Second, `mhsim()` executes a series of game iterations that defines a simulation run, up to N = `niter` total game iterations, where every such series uses a single seed for reproducible randomization (more on that below). Finally, `getfw()` takes the output from `mhsim()`, a list of game outcome vectors (either "win" or "loss"), and returns a single vector of win fractions.
 
 Importantly, `mhsim()` [vectorizes](https://en.wikipedia.org/wiki/Automatic_vectorization) game simulations with `lapply()`. Vectorization is a great way to speed up repetitive tasks in coding, and can be crucial for especially memory-taxing or large problems. The `lapply()` function is a member of the `apply` [family](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/lapply) of R functions, which have been specialized for different varieties of vectorization tasks. Some other useful ways of speeding up your code can include parallelization of tasks with [multithreading](https://en.wikipedia.org/wiki/Thread_(computing)#Multithreading). However, note that some parallelization solutions aren't strictly replicable and often require one or several additional dependencies. It's important to tailor the complexity a solution to that of its problem, and thus avoid premature or excessive optimization. For our purposes, running tens of thousands of Monty Hall simulations isn't memory intensive, and our operations below will all complete in about a minute or less.
 
@@ -157,7 +155,7 @@ I've also allowed for changing the frequency with which the player switches door
 
 # Many doors as an extrapolation mnemonic
 
-One of the more useful [mnemonic devices](https://en.wikipedia.org/wiki/Mnemonic) I've encountered for intuiting the answer to the Monty Hall Problem is to increase the number of doors. Maybe we're unsure if switching doors will increase our odds when there are just 3 doors. But if there are 100 doors, and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. We can quantitatively visualize this intuitively useful device with the simulation code. 
+One of the more useful [mnemonic devices](https://en.wikipedia.org/wiki/Mnemonic) I've encountered for intuiting the answer to the Monty Hall problem is to increase the number of doors. Maybe we're unsure if switching doors will increase our odds when there are just 3 doors. But if there are 100 doors, and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. We can quantitatively visualize this intuitively useful device with the simulation code. 
 
 Let's now generate and time the results from running 100 simulations of 100 iterations each, varying `ndoors` from 3 to 103 by 10, with otherwise classical rule parameters.
 
@@ -276,9 +274,9 @@ dev.off()
 
 # Conclusions and analysis extensions
 
-We've explored simulations of the Monty Hall Problem using a brute force approach. By exploring changes in win frequency across varying problem conditions, we've proven that always switching doors will increase player win frequency. We've also quantitatively shown how improved win frequency converges as the number of doors is increased. Finally, we explored the role of certain conditions to the problem itself. Unsuprisingly, as player switch frequency increases, so too does win frequency. In so doing, we showed how switch frequency increase leads to different win frequency improvements across doors. 
+We've explored simulations of the Monty Hall problem using a brute force approach. By exploring changes in win frequency across varying problem conditions, we've proven that always switching doors will increase player win frequency. We've also quantitatively shown how improved win frequency converges as the number of doors is increased. Finally, we explored the role of certain conditions to the problem itself. Unsuprisingly, as player switch frequency increases, so too does win frequency. In so doing, we showed how switch frequency increase leads to different win frequency improvements across doors. 
 
-This brute force simulation approach is one of many possible ways of sloving and exploring the Monty Hall Problem, and alternate approaches implementing Bayesian models could lead to further interesting insights. There are several other game conditions that could also be explored. These include changing the total number of doors with prizes, for games of at least 4 doors. Ultimately, I hope this investigation provided some useful code that equips you with a framework for investigating new problems through simulation.
+This brute force simulation approach is one of many possible ways of sloving and exploring the Monty Hall problem, and alternate approaches implementing Bayesian models could lead to further interesting insights. There are several other game conditions that could also be explored. These include changing the total number of doors with prizes, for games of at least 4 doors. Ultimately, I hope this investigation provided some useful code that equips you with a framework for investigating new problems through simulation.
 
 # Bonus plot animations
 
