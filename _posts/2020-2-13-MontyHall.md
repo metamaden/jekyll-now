@@ -28,7 +28,7 @@ We should note some key characteristics of this formulation. First, a natural bu
 
 The key parameters I've used to define the classical problem include that Monty reveals all except 1 remaining door to be a goat, and that there is 1 prize. Below we'll explore other criteria more in-depth, including the total number of doors in the game. Throughout, I've focused on studying game *win* frequencies, though I could just as easily have assessed loss frequencies. These outcomes are of course associated, since game outcome is a simple binary variable pointing to either win or loss for the player.
 
-To simulate the problem in code, pseudocode can be a helpful tool for visualizing the objective. Pseudocode is simply a type of abstraction for programming that is programming language agnostic. For the Monty Hall simulation, the initial pseudocode might be something like:
+Before we dive into the simulation code, I'll show a [pseudocode](https://en.wikipedia.org/wiki/Pseudocode) representation of the classic game formulation. Pseudocode is simply a type of abstraction for programming that is programming language agnostic. For the Monty Hall simulation, the initial pseudocode might be something like:
 
 * define Monty_Hall_Game:
   + get door_indices from 1:ndoors
