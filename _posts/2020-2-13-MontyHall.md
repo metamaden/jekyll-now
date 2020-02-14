@@ -10,7 +10,7 @@ This is the [Monty Hall Problem](https://en.wikipedia.org/wiki/Monty_Hall_proble
 
 It's telling that the Monty Hall Problem, based on an actual game show from the 1960s, still serves as a good brain teaser to this day. Given its simple rules and decision parameters, it's a problem that lends itself to programmatic simulation. In this post, I'll show how I wrote a simulation function that captures the basic (or "classical") rules of the Monty Hall Problem while allowing for exploration of how modifications to the underlying rules and conditions can chanage game outcomes. Hopefully I can inspire you to think generally about opportunities to conceptualize problems in simulations with useful code.
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="drawing" width="200" align = "right"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" url="https://github.com/metamaden/montyhall" alt="drawing" width="1500" align = "right"/>
 
 I've deployed the simulation code with a strictly reproducible vignette in the [`montyhall`](https://github.com/metamaden/montyhall) R package. Three key functions, `mhgame()`, `mhsim()`, and `getfw()`, manage game simulations and return win frequencies across sets of simulated games. Deploying work as an R package can be extremely worthwhile in production level data science projects. Here, I've knowingly omitting a few best practices for package authorship. This was in service to expediency and more clearly written code, but there are [many](https://cran.r-project.org/submit.html) [great](https://www.bioconductor.org/developers/package-submission/) [places](https://www.bioconductor.org/developers/package-guidelines/) you can and should refer to for learning R package standards and why they matter. While these functions only make use of base R without added dependencies, I've added several visualization utilities that make use of some stellar R packages, including [`ggplot2`](https://cran.r-project.org/web/packages/ggplot2/index.html). Below, I'll walk through the simulation code and show its use in scripts to investigate the Monty Hall Porblem in greater depth.
 
@@ -132,7 +132,7 @@ mtext("Number of Simulations", side = 2, outer = T)
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="200"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.png" align = "center" alt="drawing" width="1500"/>
 
 If you prefer to be more precise about the increase in normalcy, we can show greater distribution normalcy by high confidence from the 
 [Shapiro-Wilk Normality test](https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test)
@@ -188,7 +188,7 @@ getprettyplots(lnd, "Varying door count")
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.png" align = "center" alt="mh_ndoors_3plots" width="200"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_ndoors_3plots.png" align = "center" alt="mh_ndoors_3plots" width="1500"/>
 
 This quantitatively shows the magnitude of win likelihood increase with `ndoors` increase, reinforcing our intuition about the mnemonic device. It's also interesting to note how the standard deviation converges after the means in runs with higher door counts as the win frequency increase becomes both higher and more certain.
 
@@ -203,7 +203,7 @@ grid.arrange(pclassic1, pclassic2, top = "Ribbon overlay comparison", ncol = 2)
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="200"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_2lineplots.png" align = "center" alt="mh_2lineplots" width="1500"/>
 
 We'll lean on these line plot representations using distribution standard deviations to calculate the overlaid ribbons.
 
@@ -250,7 +250,7 @@ grid.arrange(plist[[1]], plist[[2]], plist[[3]],
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.png" align = "center" alt="mh_switchfreq" width="200"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq.png" align = "center" alt="mh_switchfreq" width="1500"/>
 
 Across run sets of each door switch frequency, there's a clear transition from an approximate negative power function (e.g. x ^ -1, top leftmost plot), to something approaching a fractional power function (e.g. x ^ 1/2, bottom rightmost plot). 
 
@@ -272,7 +272,7 @@ getlineplot(lnd, ptitle = "Win Freq. by Switch Freq.",
 dev.off()
 ```
 
-<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="200"/>
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="1500"/>
 
 # Conclusions and analysis extensions
 
