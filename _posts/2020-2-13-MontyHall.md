@@ -16,13 +16,13 @@ I've deployed the code with a strictly reproducible vignette in the `montyhall` 
 
 # Formulating the game
 
-We can call the typical formulation of the game, as above, the "canonical" or "classical" formulation. This has the following attributes or rules:
+Here's a formulation of the steps in the original Monty Hall Problem, as described above:
 
 1. Three doors total, behind which 1 has a prize, and the remaining 2 have goats.
 2. The player picks a door (decision 1).
 3. Monty reveals one of the two remaining doors to be a goat.
 4. The player decides whether to stick with their initial choice or switch to the last unpicked door (decision 2).
-5. The final player-selected door is revealed to be either a goat or the prize.
+5. Game outcome is determined by whether the final player-selected door reveals either a prize (win) or a goat (loss).
 
 We should note some key characteristics of this formulation. First, a natural but flawed formulation might state that all the player does is pick a door (decision 1) then pick another door (decision 2). Instead, I've stated the player picks a door (decision 1) then they decide whether to switch doors (decision 2). This distinction is vital because it acknowledges that Monty is providing information that between the decisions that can help our odds of winning if we heed it. Second, there's randomness implied in stages 1 - 3, or in selecting the prize door (stage 1), player picking a door (stage 2/decision 1), and monty revealing a goat (stage 3). The last stage is randomized just 1 out of 3 games, where the player already picked the prize door and Monty decides which remaining goat door to reveal at random.
 
