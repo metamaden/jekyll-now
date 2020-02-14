@@ -134,6 +134,10 @@ mtext("Number of Simulations", side = 2, outer = T)
 dev.off()
 ```
 
+![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf){width=70%}
+
+<img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/montyhall.png" alt="drawing" width="200" align = "right"/>
+
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf" alt="drawing" width="200"/>
 
 ![https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf](https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_3runs.pdf)
