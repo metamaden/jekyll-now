@@ -172,9 +172,9 @@ Next, we can vary the player switch frequency (decision 2). The default setting 
 
 # Increasing door counts and visualizing the mnemonic device
 
-A useful [mnemonic device](https://en.wikipedia.org/wiki/Mnemonic) to intuit that we should *always* switch doors is to simply increase the number of doors while preserving the other default settings/game rules (including that the player always switches doors). Maybe we're unsure if switching doors will increase our win chances with 3 doors. But if there's instead 100 doors and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. As enumerated, we can quantitatively simulate outcome results from increasing the door quantity. Further, visualizing these results effectively can reinforce the intuition gained from this many-doors mnemonic device.
+Other than role memorization, a useful [mnemonic device](https://en.wikipedia.org/wiki/Mnemonic) to intuit or re-derive that we should *always* switch doors is to simply increase the number of doors while preserving the other default settings/game rules. Maybe we're unsure if switching doors will increase our win chances with 3 doors. But if there's instead 100 doors and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. As enumerated, we can quantitatively simulate outcome results from increasing the door quantity. Further, visualizing these results effectively can reinforce the intuition gained from this many-doors mnemonic device.
 
-Let's now generate and time the results of running 100 simulations of 100 classic games. I'll vary `ndoors` from 3 to 103 by 10, with otherwise default settings.
+Let's now generate and time the results of running 100 simulations of 100 classic games. I'll vary `ndoors` from 3 to 103 by 10, with otherwise default settings (including that the player always switches their door choice).
 
 ```
 # get win frequencies from varying ndoors
