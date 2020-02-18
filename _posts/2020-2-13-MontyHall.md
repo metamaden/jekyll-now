@@ -107,7 +107,7 @@ The second player decision is then parsed, and the function returns the game out
 
 # Simulating the classic problem
 
-Let's study the impact of varying the number of simulations and iterations per simulation on the distribution of win frequencies across simulations. I started small with just 5 simulations of 2 games (10 total games), and increased to 100 (10,000 games) and 1,000 (1,000,000 games) simulations and iterations, respectively. To execute the simulations, I iterated over 3 parameter sets and time it with `Sys.time()`. I used a `for` loop to iterate over the indices of the 3-value parameter vectors where indices are used to retrieve parameters for each run.
+Let's study the impact of varying the number of simulations and iterations per simulation on the distribution of win frequencies across simulations. Again, note that I've set the player switch frequency to 100% with the default setting `doorswitch = 1`. I started small with just 5 simulations of 2 games (10 total games), and increased to 100 (10,000 games) and 1,000 (1,000,000 games) simulations and iterations, respectively. To execute the simulations, I iterated over 3 parameter sets and time it with `Sys.time()`. I used a `for` loop to iterate over the indices of the 3-value parameter vectors where indices are used to retrieve parameters for each run.
 
 ```
 # parameter sets
@@ -168,13 +168,13 @@ I've written the simulation code to execute the Monty Hall problem with its clas
 
 The first condition I'll explore is door quantity, which can be set with the `ndoors` argument to `mhsim()`. This value then gets passed to `mhgame()`. In practice this simply sets the `doorseq` vector of door indices to be of length `ndoors`, and subsequent steps proceed as normal.
 
-The player switch frequency (decision 2) can also be set with `doorswitch`. The default value of 1 means the player switches 100% of the time, and this can be decreased to some decimal between 0 and 1. The player decision (switch or stay) is determined by randomly selecting from a weighted binomial distribution defined by the argument. So if `doorswitch = 0.2`, the player decision is drawn from a distribution where 20% of options are "switch" and (100 - 20 = ) 80% of options are "stay". Again, setting this argument allows other game steps to run as normal.
+Next, we can explore variations of player switch frequency (decision 2) and varying door quantities together. The default setting `doorswitch = 1` means the player switches 100% of the time, and this can be decreased to some decimal between 0 and 1. The player decision (switch or stay) is determined by randomly selecting from a weighted binomial distribution defined by the argument. So if `doorswitch = 0.2`, the player decision is drawn from a distribution where 20% of options are "switch" and (100 - 20 = ) 80% of options are "stay". Again, setting this argument allows other game steps to run as normal.
 
 # Increasing door counts and visualizing the mnemonic device
 
-A useful [mnemonic device](https://en.wikipedia.org/wiki/Mnemonic) to intuit that we should *always* switch doors is to simply increase the number of doors while preserving the other game rules. Maybe we're unsure if switching doors will increase our win chances with 3 doors. But if there's instead 100 doors and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. As enumerated, we can quantitatively simulate outcome results from increasing the door quantity. Further, visualizing these results effectively can reinforce the intuition gained from this many-doors mnemonic device.
+A useful [mnemonic device](https://en.wikipedia.org/wiki/Mnemonic) to intuit that we should *always* switch doors is to simply increase the number of doors while preserving the other game rules (including that the player always switches doors). Maybe we're unsure if switching doors will increase our win chances with 3 doors. But if there's instead 100 doors and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. As enumerated, we can quantitatively simulate outcome results from increasing the door quantity. Further, visualizing these results effectively can reinforce the intuition gained from this many-doors mnemonic device.
 
-Let's now generate and time the results of running 100 simulations of 100 iterations each. I'll vary `ndoors` from 3 to 103 by 10, with otherwise default settings.
+Let's now generate and time the results of running 100 simulations of 100 classic games. I'll vary `ndoors` from 3 to 103 by 10, with otherwise default settings.
 
 ```
 # get win frequencies from varying ndoors
@@ -209,7 +209,7 @@ dev.off()
 
 Thus we have 3 ways of visualizing the win frequency distribution increase following increased door quantity. Interestingly, as door quantity increases, the standard deviation seems to contract slightly after the means show an asymptote, which reflects that win frequency increase becomes both higher and more certain at higher door quantities.
 
-I've allowed for two plot types with the `ribbontype` argument, which allow for two types of confidence visualizations (the grey-colored ribbon overlay). This can use either the standard deviation (if `sd`, the default), or the minimum and maximum win frequencies observed (if `minmax`). Let's compare these below.
+I've allowed for two types of line plot overlays with the `ribbontype` argument. This allows for 2 types of confidence visualizations (the grey-colored ribbon overlay). Confidences can use either the standard deviation (if `sd`, the default), or the minimum and maximum win frequencies observed (if `minmax`). Let's compare these below.
 
 ```
 pclassic1 <- getlineplot(lnd, ptitle = "Std. dev. overlay", ribbontype = "sd")
@@ -228,7 +228,7 @@ Again, I'll tend to use `sd` as it's more useful to describe the underlying win 
 
 # What if the player doesn't always switch?
 
-Next, let's observe the impact of changing the player switch frequency, or how often the player switches from their initial door selection. As mentioned, this is set by passing the decimal switch frequency to the `doorswitch` argument, which then parses player choice for each iteration from a weighted binomial distribution.
+Next, let's observe the impact of changing the player switch frequency, or how often the player switches (player decision 2) from their initial door selection (decision 1). We'll do this by varying the `doorswitch` argument, which parses player choice for each iteration from a weighted binomial distribution. We can then observe outcome changes in relation to varying door quantities.
 
 I'll run 10 simulations varying the switch frequency from 0% to 100% in increments of 10%. I'll then store the results in `ldat` and the plots in `plist`. For the results plot, I've set identical x- and y-axis ranges in `getlineplot` to aid with visual comparison.
 
@@ -275,7 +275,7 @@ dev.off()
 
 Across run sets of each door switch frequency, there's a clear transition from an approximate negative power function (e.g. x ^ -1, top leftmost plot), to something approaching a fractional power function (e.g. x ^ 1/2, bottom rightmost plot). Note the win fraction only starts to show improvement with door quantity increase when the switch frequency is greater than 50% (bottom, second from leftmost plot), and that win fraction changes for a given switch frequency tend to always form asymptotes.
 
-Increasing the switch frequency under classical rules should show progressive win fraction increases. Let's generate and visualize the simulation results for this. I'll appropriate my `getlineplot()` function, but note that it can be better to explicitly handle different axis variables (e.g. `ndoors` and `doorswitch` here) with discrete code. The resulting plot shows a clear linear win fraction increase with switch frequency, maxing out at the now-familiar value of 0.667.
+Increasing the switch frequency under classical rules should show progressive win fraction increases. Let's generate and visualize the simulation results for this. I'll appropriate my `getlineplot()` function, but note that it can be better to explicitly handle different axis variables (e.g. `ndoors` and `doorswitch` here) with discrete code.
 
 ```
 sfreq <- seq(0, 1, 0.1)
@@ -296,6 +296,8 @@ dev.off()
 <img src="https://raw.githubusercontent.com/metamaden/montyhall/master/plots/mh_switchfreq_classicrules.png" align = "center" alt="mh_switchfreq_classicrules" width="500"/>
 
 **Figure 5.** Simulation results from varying switch frequency using only classic Monty Hall rules/parameters (function defaults).
+
+The resulting plot shows a clear linear win fraction increase with switch frequency, maxing out at the now-familiar mean of about 0.667.
 
 # Animating results plots
 
