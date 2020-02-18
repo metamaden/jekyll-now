@@ -168,11 +168,11 @@ I've written the simulation code to execute the Monty Hall problem with its clas
 
 The first condition I'll explore is door quantity, which can be set with the `ndoors` argument to `mhsim()`. This value then gets passed to `mhgame()`. In practice this simply sets the `doorseq` vector of door indices to be of length `ndoors`, and subsequent steps proceed as normal.
 
-Next, we can explore variations of player switch frequency (decision 2) and varying door quantities together. The default setting `doorswitch = 1` means the player switches 100% of the time, and this can be decreased to some decimal between 0 and 1. The player decision (switch or stay) is determined by randomly selecting from a weighted binomial distribution defined by the argument. So if `doorswitch = 0.2`, the player decision is drawn from a distribution where 20% of options are "switch" and (100 - 20 = ) 80% of options are "stay". Again, setting this argument allows other game steps to run as normal.
+Next, we can vary the player switch frequency (decision 2). The default setting `doorswitch = 1` means the player switches 100% of the time, and this can be decreased to some decimal between 0 and 1. The player decision (switch or stay) is determined by randomly selecting from a weighted binomial distribution defined by the argument. So if `doorswitch = 0.2`, the player decision is drawn from a distribution where 20% of options are "switch" and (100 - 20 = ) 80% of options are "stay". Again, setting this argument allows other game steps to run as normal.
 
 # Increasing door counts and visualizing the mnemonic device
 
-A useful [mnemonic device](https://en.wikipedia.org/wiki/Mnemonic) to intuit that we should *always* switch doors is to simply increase the number of doors while preserving the other game rules (including that the player always switches doors). Maybe we're unsure if switching doors will increase our win chances with 3 doors. But if there's instead 100 doors and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. As enumerated, we can quantitatively simulate outcome results from increasing the door quantity. Further, visualizing these results effectively can reinforce the intuition gained from this many-doors mnemonic device.
+A useful [mnemonic device](https://en.wikipedia.org/wiki/Mnemonic) to intuit that we should *always* switch doors is to simply increase the number of doors while preserving the other default settings/game rules (including that the player always switches doors). Maybe we're unsure if switching doors will increase our win chances with 3 doors. But if there's instead 100 doors and Monty reveals goats behind 98 of them, it's much clearer that switching will increase our chances of winning. As enumerated, we can quantitatively simulate outcome results from increasing the door quantity. Further, visualizing these results effectively can reinforce the intuition gained from this many-doors mnemonic device.
 
 Let's now generate and time the results of running 100 simulations of 100 classic games. I'll vary `ndoors` from 3 to 103 by 10, with otherwise default settings.
 
@@ -228,9 +228,9 @@ Again, I'll tend to use `sd` as it's more useful to describe the underlying win 
 
 # What if the player doesn't always switch?
 
-Next, let's observe the impact of changing the player switch frequency, or how often the player switches (player decision 2) from their initial door selection (decision 1). We'll do this by varying the `doorswitch` argument, which parses player choice for each iteration from a weighted binomial distribution. We can then observe outcome changes in relation to varying door quantities.
+Next, let's observe the impact of changing the player switch frequency, or how often the player switches (player decision 2) from their initial door selection (decision 1). I'll do this by varying the `doorswitch` argument, which parses player choice for each iteration from a weighted binomial distribution. I'll also covary the door quantity with switch frequency, and observe outcome changes across both.
 
-I'll run 10 simulations varying the switch frequency from 0% to 100% in increments of 10%. I'll then store the results in `ldat` and the plots in `plist`. For the results plot, I've set identical x- and y-axis ranges in `getlineplot` to aid with visual comparison.
+I'll run 10 simulations varying the switch frequency from 0% to 100% in increments of 10%, and varying the door quantity as above (3 to 103 by 10). I'll then store the results in `ldat` and the plots in `plist`. For the results plot, I've set identical x- and y-axis ranges in `getlineplot` to aid with visual comparison.
 
 ```
 # get fwin dist across ndoors
