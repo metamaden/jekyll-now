@@ -1,10 +1,8 @@
 ---
 layout: page
-title: About Sean
+title: About me
 permalink: /about/
 ---
-
-### About me
 
 Sean is a Computational Biology Ph.D candidate (second year) at Oregon Health & Science University (OHSU) in Portland, OR. I'm advised by Prof. Abhi Nellore, and my affiliations include PDXgx (Prof. Reid Thompson and affiliates) and the Johns Hopkins University Genomics Collective. I'm a researcher and scholar of bioinformatics, epigenetics, biological aging, and integrative computational biology.
 
