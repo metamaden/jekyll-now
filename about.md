@@ -8,7 +8,7 @@ Sean is a Computational Biology Ph.D candidate (second year) at Oregon Health & 
 
 ### Research experience and interests
 
-Sean's Ph.D. work touches on the fields of bioinformatics, biostatistics, and computation, with a scientific focus on basic research of epigenetic dynamics and biological aging in normal and cancer tissues. His study approach uses cross-study analyses for quality control and normalization, which leverages more abundant and varied available samples while avoiding critical issues with traditional meta-analyses. His initial first-author paper characterized 35,360 DNA methylation array samples obtained programmatically from the Gene Expression Omnibus (GEO).
+Sean's Ph.D. work touches on the fields of bioinformatics, biostatistics, and computation, with a scientific focus on basic research of epigenetic dynamics and biological aging in normal and cancer tissues. His study approach uses cross-study analyses for quality control and normalization, which leverages more abundant and varied available samples while avoiding critical issues with traditional meta-analyses. His initial first-author paper as a Ph.D. student characterized 35,360 DNA methylation array samples obtained programmatically from the Gene Expression Omnibus (GEO).
 
 ### Programming experience and interests
 
