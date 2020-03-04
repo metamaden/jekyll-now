@@ -20,6 +20,6 @@ Sean possesses over 5 years of full-time programming experience, including sever
 
 Outside of his bioinformatics pursuits, Sean is passionate about vintage scooters, data-driven blogs, tech hackathons, data activism, microbrews, board games, and bouldering.
 
-### Sean's Curriculum Vitae
+### Curriculum Vitae
 Access Sean's CV from his dedicated [CV repo.](https://github.com/metamaden/CV_repo)
 
