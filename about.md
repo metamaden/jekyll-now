@@ -3,7 +3,7 @@ layout: page
 title: About Sean
 permalink: /about/
 ---
-<img src="https://raw.githubusercontent.com/metamaden/metamaden.github.io/master/images/seanmaden_profilepic.jpg" url="https://github.com/metamaden/" alt="The hex sticker for `montyhall`, an R package for simulating the Monty Hall problem." width="200" align = "right"/>
+<img src="https://raw.githubusercontent.com/metamaden/metamaden.github.io/master/images/seanmaden_profilepic.jpg" url="https://github.com/metamaden/" alt="sean-maden_profile-pic" width="200" align = "right"/>
 
 Sean is a Computational Biology Ph.D candidate (second year) at Oregon Health & Science University (OHSU) in Portland, OR. He is advised by Prof. Abhi Nellore, and his affiliations include PDXgx (Prof. Reid Thompson and affiliates) and the Johns Hopkins University Genomics Collective. Sean is a researcher and scholar of bioinformatics, biostatistics, epigenetics, biological aging, and integrative computational biology.
 
