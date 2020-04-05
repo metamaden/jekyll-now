@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How I Made My First Personal Site and Blog - GitHub Pages + Jekyll == <3
+title: How I Made My First Personal Site and Blog - GitHub Pages + Jekyll == :heart_eyes:
 tags: research; bioinformatics; GitHub; GitHub Pages; Jekyll
 ---
 
