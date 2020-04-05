@@ -1,6 +1,6 @@
 ---
 layout: post
-title:`databike`: coding an app about scooter upkeep, in R
+title: Databike: coding an app about scooter upkeep, in R
 categories:[simulation; app; game; reproducible_code]
 tags:[R; Rstats; grid; jpeg; svDialogs; ascii]
 ---
