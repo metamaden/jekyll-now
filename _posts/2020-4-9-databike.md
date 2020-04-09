@@ -1,5 +1,5 @@
 ---
-title: 'Databike: coding an app about scooter upkeep, in R'
+title: 'Databike: coding an app about scooter upkeep'
 author: "Sean Maden"
 date: "4/9/2020"
 layout: post
@@ -19,15 +19,15 @@ categories:
 
 <img src="https://raw.githubusercontent.com/metamaden/databike/master/appnotes/imgs/databike_ch150elite.jpg" align = "right" alt="elite" width="150"/>
 
-I've owned my 1987 CH150 Honda elite (a.k.a. "the databike") for almost 2 years, but I'm still a novice when it comes to scooter repair and upkeep. My hobby inspired me to write an app about scooter upkeep. In this post, I describe early development on [`databike`](https://github.com/metamaden/databike/), an app about scooter upkeep. In `databike`, the user makes decisions about maintenance (e.g. repair, maintain, or do nothing) and during obstacles encountered on rides (e.g. whether to quit or continue). These decisions impact the bike condition and total mileage or ride distance. The basic "user interface" consists of graphics (text/ascii art, printed in sequence), and user dialogues and notifications (pop-up windows with text and options buttons). The app code is available on GitHub ([link](https://github.com/metamaden/databike/)). This undertaking was novel for me, and I have loads of updates in mind.
+I've owned my 1987 CH150 Honda elite (a.k.a. "the databike") for almost 2 years, but I'm still a novice when it comes to scooter repair and upkeep. My hobby inspired me to write an app about scooter upkeep. In this post, I describe early development on [`databike`](https://github.com/metamaden/databike/) using R, an app about scooter upkeep. In `databike`, the user makes decisions about maintenance (e.g. repair, maintain, or do nothing) and during obstacles encountered on rides (e.g. whether to quit or continue). These decisions impact the bike condition and total mileage or ride distance. The basic "user interface" consists of graphics (text/ascii art, printed in sequence), and user dialogues and notifications (pop-up windows with text and options buttons). The app code is available on GitHub ([link](https://github.com/metamaden/databike/)). This undertaking was novel for me, and I have loads of updates in mind.
 
 # The application
 
-The app may be run from command line by navigating to the root directory and using:
+With R installed, the app may be run from command line by navigating to the root directory (e.g. `cd /Documents/GitHub/databike`) and using:
 
 ```
 R
-source(./app.R)
+source(app.R)
 ```
 
 ## Programming in R
