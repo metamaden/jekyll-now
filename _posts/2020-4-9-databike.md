@@ -27,7 +27,7 @@ The app may be run from command line by navigating to the root directory and usi
 
 ```
 R
-Rscript ./app.R
+source(./app.R)
 ```
 
 ## Programming in R
