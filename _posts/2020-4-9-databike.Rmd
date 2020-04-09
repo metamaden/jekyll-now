@@ -1,18 +1,42 @@
 ---
+title: 'Databike: coding an app about scooter upkeep, in R'
+author: "Sean Maden"
+date: "4/9/2020"
 layout: post
-title: "Databike: coding an app about scooter upkeep, in R"
-categories:[simulation, app, game, reproducible_code]
-tags:[R, Rstats, grid, jpeg, svDialogs, ascii]
+tags:
+- R
+- Rstats
+- grid
+- jpeg
+- svDialogs
+- ascii
+categories:
+- simulation
+- app
+- game
+- reproducible_code
 ---
 
 # Overview
 
-Here, I describe the process of designing `databike`, an interactive application about scooter upkeep. The app code is available at the [databike repository](https://raw.githubusercontent.com/metamaden/databike/). This was a novel undertaking, and there's plenty of room for improving this application. I will periodically share lessons of general interest for learning programming.
+I've owned my 1987 CH150 Honda elite (the "databike") for almost 2 years, but I'm more or less still a novice when it comes to scooter repair and upkeep. This scooter hobby inspired me to write an app about scooter upkeep. In this initial post, I describe planning and early builds of `databike`, an app about scooter upkeep.
 
-(gif of logo, with color inversion)
+In `databike`, the user makes decisions about rides and maintenance that impact their bike's condition and the total mileage. Graphics are simple ascii-style text printed with `grid`, and dialogs are pop-up windows managed through `svDialogs`. The app code is available at the [databike repository](https://github.com/metamaden/databike/). This undertaking was novel for me, and I have loads of updates in mind.
 
-<img src="https://raw.githubusercontent.com/metamaden/databike/vignettes/imgs/logo.jpg" align = "right" alt="drawing" width="500"/>
-**Figure 1.** <`databike` logo>
+# App design decisions
+
+Firstly, creating this app in R was a conscious choice to test my knowledge of how to use R by taking on something completely out of left field. Rest assured, there are better languages out there for app design, but this unconventional use of the language proved a stimulating challenge and lead to some new insights about learning and applying knowledge of code which I hope to share in this blog.
+
+# The gameplay loop
+
+I wanted to include a proto user interface and some sort of looping code structure. I appropriated some apps for this task, including `svgDialogs` and `grid`. Building this app in R, with minimal dependencies, proved an interesting challenge, and one that I became engrossed in. Could the app create the illusion of "motion" with looped iteations over graph frames? Could the app manage several types of branching dialogs while also displaying "graphics"? Exploring these questions was a challenge unto itself.
+
+# Gameplay updates
+
+Like my scooter, this project is a labor of love (emphasis on labor), but which I've learned from and will continue to use as a chance to experiment, improve, and enjoy. Yay for hobbies!
+
+
+
 
 # App design
 
@@ -68,4 +92,3 @@ This section walks through some of the interface decisions for the early app. Ex
 ```
 
 # Conclusions
-
