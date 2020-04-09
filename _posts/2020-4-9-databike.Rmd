@@ -17,60 +17,28 @@ categories:
 - reproducible_code
 ---
 
-# Overview
+# Introduction and motivation
 
-I've owned my 1987 CH150 Honda elite (the "databike") for almost 2 years, but I'm more or less still a novice when it comes to scooter repair and upkeep. This scooter hobby inspired me to write an app about scooter upkeep. In this initial post, I describe planning and early builds of `databike`, an app about scooter upkeep.
+I've owned my 1987 CH150 Honda elite (a.k.a. "the databike") for almost 2 years, but I'm more or less still a novice when it comes to scooter repair and upkeep. This scooter hobby inspired me to write an app about scooter upkeep. In this post, I describe the early development of `databike`, an app about scooter upkeep.
 
 In `databike`, the user makes decisions about rides and maintenance that impact their bike's condition and the total mileage. Graphics are simple ascii-style text printed with `grid`, and dialogs are pop-up windows managed through `svDialogs`. The app code is available at the [databike repository](https://github.com/metamaden/databike/). This undertaking was novel for me, and I have loads of updates in mind.
 
 # App design decisions
 
-Firstly, creating this app in R was a conscious choice to test my knowledge of how to use R by taking on something completely out of left field. Rest assured, there are better languages out there for app design, but this unconventional use of the language proved a stimulating challenge and lead to some new insights about learning and applying knowledge of code which I hope to share in this blog.
+Creating this app in R was a conscious design decision to test my programming knowledge. Rest assured, there are better languages and utilities more commonly used and supported for app development (e.g. developer kits, C++, Java, etc.). 
 
-# The gameplay loop
+The challenge of writing app code in R proved to be worthwhile, and lead me to real insights and about the language's potential. More generally, an excercise of this kind is important for continued development and improvement of code to tackle real-world issues, and modern innovations in programming already seek to address issues of this kind (e.g. achieving object-oriented functionality from a functional language, or vice versa).
+
+## User interfacing
 
 I wanted to include a proto user interface and some sort of looping code structure. I appropriated some apps for this task, including `svgDialogs` and `grid`. Building this app in R, with minimal dependencies, proved an interesting challenge, and one that I became engrossed in. Could the app create the illusion of "motion" with looped iteations over graph frames? Could the app manage several types of branching dialogs while also displaying "graphics"? Exploring these questions was a challenge unto itself.
 
-# Gameplay updates
+## Goals for app functionality
 
-Like my scooter, this project is a labor of love (emphasis on labor), but which I've learned from and will continue to use as a chance to experiment, improve, and enjoy. Yay for hobbies!
-
-
-
-
-# App design
-
-## Goals
-
-There were several goals for the initial app. The goal was to create a command line-runnable application the includes user interactivity and some form of hook to allow continuous progression. These goals would ideally be met while adhering to principles of reproducible code and app development.
-
-## Early app progress
-
-The initial driving notion was to design a compact application with few dependencies. I experimented with different methods to print text rapidly for a kind of animation interface. I arrived at looping on printed character strings in loops. In other words, ascii art!
-
-(gif of ride normal animation here.)
-
-Next, I explored options for user dialogue windows, settling on `svDialogue::dvg_dialogue()` owing to its flexibility and out-of-the-box utility.
-
-## Tasks outline and workflows
-
-I spent considerable time trying to simply get the ascii art and dialogues to play well togther. These still need considerable fine-tuning, but I could have saved considerable time had I thought to literally sketch out the app design itself. Ultimately, I arrived at the following design, which I can revisit if I need to return to "bigger picture" questions for next steps.
-
-<img src="https://raw.githubusercontent.com/metamaden/databike/vignettes/imgs/app_flowchart.jpg" align = "center" alt="drawing" width="1800"/>
-**Figure 2.** <App flowchart>
-
-Even if an early workflow diagram doesn't accurately reflect the ultimate product, reviewing such a diagram provides a vital opportunity to pause and reflect on the bigger picture and individual steps to take next.
-
-## Repository and package outline
-
-(show tree diagram of app dir, main branch at posting)
-
-## Takeaways
-Takeways from this section include: 
-* bulleted list
-  + keep a log for goals, ideas, bugs, etc. and meticulously organize this. It can be helpful to simply have this in a text file or physical journal.
-  + draw workflow diagrams and review these frequently.
-  + schedule breaks and take them. Return to "bigger picture" questions frequently.
+1. Scheduled error report logs and automated "game testing" (e.g. run app iterations and log outcomes or new errors)
+2. Run convenience (e.g. runs from command line, executable file, etc.)
+3. Window management (e.g. manage multiple windows)
+4. Build (e.g. pass `R CMD CHECK` and `R CMD BUILD`)
 
 # R code examples
 
