@@ -1,7 +1,7 @@
 ---
 title: 'Databike: coding an app about scooter upkeep'
 author: "Sean Maden"
-date: "4/9/2020"
+date: "9/4/2020"
 layout: post
 tags:
 - R
